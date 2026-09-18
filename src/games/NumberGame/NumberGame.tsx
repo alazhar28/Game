@@ -7,7 +7,6 @@ type Question = {
   object: string
 }
 
-const objects = ["🌾", "🍚", "🌾", "🍚", "🌾", "🍚"]
 
 function createQuestion(id: number): Question {
   const answer = Math.floor(Math.random() * 6) + 1
