@@ -972,7 +972,7 @@ function NumberMatchingGame() {
           <div
             className="
               bg-white
-              rounded-[2rem]
+             
               shadow-2xl
               p-8
               text-center
