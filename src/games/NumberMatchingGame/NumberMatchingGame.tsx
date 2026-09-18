@@ -700,68 +700,6 @@ function NumberMatchingGame() {
       {/* MODAL BENAR */}
       {/* ===================== */}
 
-      {/* {feedback === "correct" && (
-        <div
-          className="
-            fixed
-            inset-0
-            z-50
-            bg-black/30
-            flex
-            items-center
-            justify-center
-            p-5
-          "
-        >
-          <div
-            className="
-              bg-white
-              rounded-[2rem]
-              shadow-2xl
-              p-8
-              text-center
-              max-w-md
-              w-full
-            "
-          >
-            <div className="text-7xl">
-              🎉
-            </div>
-
-            <h2
-              className="
-                text-4xl
-                font-bold
-                text-green-500
-                mt-3
-              "
-            >
-              Benar!
-            </h2>
-
-            <p
-              className="
-                text-xl
-                text-gray-600
-                mt-3
-              "
-            >
-              MasyaAllah, hebat sekali!
-            </p>
-
-            <p
-              className="
-                text-lg
-                text-gray-500
-                mt-2
-              "
-            >
-              Ada {question.answer}{" "}
-              {question.food.name.toLowerCase()}.
-            </p>
-          </div>
-        </div>
-      )} */}
 
       {feedback === "correct" && (
   <div
