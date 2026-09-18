@@ -322,8 +322,7 @@ function NumberMatchingGame() {
       className="
         min-h-screen
         bg-amber-50
-        p-3
-        sm:p-4
+        p-4
         md:p-8
         select-none
       "
@@ -410,17 +409,13 @@ function NumberMatchingGame() {
           relative
           max-w-6xl
           mx-auto
-          mt-5
-          sm:mt-8
+          mt-8
           bg-white
-          rounded-[1.5rem]
-          md:rounded-[2rem]
+          rounded-[2rem]
           shadow-xl
-          p-3
-          sm:p-5
+          p-5
           md:p-10
           overflow-hidden
-          touch-pan-y
         "
       >
         {/* SVG GARIS */}
@@ -458,12 +453,10 @@ function NumberMatchingGame() {
             z-10
             grid
             md:grid-cols-2
-            gap-6
-            sm:gap-8
+            gap-10
             md:gap-20
             items-center
-            min-h-[360px]
-            sm:min-h-[430px]
+            min-h-[430px]
           "
         >
           {/* ===================== */}
@@ -473,14 +466,12 @@ function NumberMatchingGame() {
           <div>
             <h2
               className="
-                text-xl
-                sm:text-2xl
+                text-2xl
                 md:text-3xl
                 font-bold
                 text-green-600
                 text-center
-                mb-4
-                sm:mb-6
+                mb-6
               "
             >
               Pilih Angka
@@ -491,8 +482,7 @@ function NumberMatchingGame() {
                 flex
                 flex-col
                 items-center
-                gap-3
-                sm:gap-5
+                gap-5
               "
             >
               {question.options.map(
@@ -503,10 +493,8 @@ function NumberMatchingGame() {
                     type="button"
                     className="
                       relative
-                      w-20
-                      h-16
-                      sm:w-24
-                      sm:h-20
+                      w-24
+                      h-20
                       md:w-28
                       md:h-24
                       bg-green-50
@@ -517,8 +505,7 @@ function NumberMatchingGame() {
                       flex
                       items-center
                       justify-center
-                      text-4xl
-                      sm:text-5xl
+                      text-5xl
                       md:text-6xl
                       font-bold
                       text-green-700
@@ -535,14 +522,11 @@ function NumberMatchingGame() {
                     <span
                       className="
                         absolute
-                        right-[-10px]
+                        right-[-12px]
                         top-1/2
                         -translate-y-1/2
-                        w-5
-                        h-5
-                        sm:right-[-12px]
-                        sm:w-6
-                        sm:h-6
+                        w-6
+                        h-6
                         bg-green-500
                         border-4
                         border-white
@@ -563,14 +547,12 @@ function NumberMatchingGame() {
           <div>
             <h2
               className="
-                text-xl
-                sm:text-2xl
+                text-2xl
                 md:text-3xl
                 font-bold
                 text-amber-600
                 text-center
-                mb-4
-                sm:mb-6
+                mb-6
               "
             >
               Hitung {question.food.name}
@@ -579,20 +561,17 @@ function NumberMatchingGame() {
             <div
               className="
                 relative
-                min-h-[220px]
-                sm:min-h-[280px]
+                min-h-[280px]
                 bg-amber-50
                 border-4
                 border-amber-100
                 rounded-3xl
-                p-3
-                sm:p-6
+                p-6
                 flex
                 flex-wrap
                 justify-center
                 items-center
-                gap-3
-                sm:gap-5
+                gap-5
               "
             >
               {/* KELOMPOK GAMBAR */}
@@ -603,8 +582,7 @@ function NumberMatchingGame() {
                   flex-wrap
                   justify-center
                   items-center
-                  gap-3
-                sm:gap-5
+                  gap-5
                 "
               >
                 {/* {Array.from({
@@ -654,8 +632,8 @@ function NumberMatchingGame() {
       p-3
       ${
         question.answer === 1
-          ? "w-36 h-36 sm:w-48 sm:h-48 md:w-60 md:h-60"
-          : "w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
+          ? "w-48 h-48 md:w-60 md:h-60"
+          : "w-24 h-24 md:w-28 md:h-28"
       }
     `}
   >
@@ -685,14 +663,11 @@ function NumberMatchingGame() {
                 onPointerDown={startDrag}
                 className="
                   absolute
-                  left-[-10px]
+                  left-[-14px]
                   top-1/2
                   -translate-y-1/2
-                  w-7
-                  h-7
-                  sm:left-[-14px]
-                  sm:w-8
-                  sm:h-8
+                  w-8
+                  h-8
                   bg-orange-400
                   border-4
                   border-white
@@ -749,7 +724,7 @@ function NumberMatchingGame() {
               w-full
             "
           >
-            <div className="text-6xl sm:text-7xl">
+            <div className="text-7xl">
               🎉
             </div>
 
@@ -806,8 +781,7 @@ function NumberMatchingGame() {
         bg-white
         rounded-[2rem]
         shadow-2xl
-        p-5
-        sm:p-8
+        p-8
         text-center
         max-w-md
         w-full
@@ -820,10 +794,8 @@ function NumberMatchingGame() {
           src="/images/anak.png"
           alt="Anak"
           className="
-            w-28
-            h-28
-            sm:w-36
-            sm:h-36
+            w-36
+            h-36
             md:w-44
             md:h-44
             object-contain
@@ -834,8 +806,7 @@ function NumberMatchingGame() {
 
       <h2
         className="
-          text-3xl
-          sm:text-4xl
+          text-4xl
           font-bold
           text-green-500
           mt-3
@@ -846,8 +817,7 @@ function NumberMatchingGame() {
 
       <p
         className="
-          text-base
-          sm:text-xl
+          text-xl
           text-gray-600
           mt-3
         "
@@ -857,8 +827,7 @@ function NumberMatchingGame() {
 
       <p
         className="
-          text-base
-          sm:text-lg
+          text-lg
           text-gray-500
           mt-2
         "
@@ -898,14 +867,13 @@ function NumberMatchingGame() {
               w-full
             "
           >
-            <div className="text-6xl sm:text-7xl">
+            <div className="text-7xl">
               😊
             </div>
 
             <h2
               className="
-                text-2xl
-                sm:text-3xl
+                text-3xl
                 md:text-4xl
                 font-bold
                 text-orange-500
@@ -932,13 +900,10 @@ function NumberMatchingGame() {
                 mt-6
                 bg-orange-400
                 text-white
-                px-6
-                py-3
-                sm:px-8
-                sm:py-4
+                px-8
+                py-4
                 rounded-full
-                text-lg
-                sm:text-xl
+                text-xl
                 font-bold
                 shadow-lg
                 hover:bg-orange-500
@@ -972,7 +937,7 @@ function NumberMatchingGame() {
           <div
             className="
               bg-white
-             
+              rounded-[2rem]
               shadow-2xl
               p-8
               text-center
@@ -980,7 +945,7 @@ function NumberMatchingGame() {
               w-full
             "
           >
-            <div className="text-6xl sm:text-7xl">
+            <div className="text-7xl">
               🏆
             </div>
 
@@ -1008,8 +973,7 @@ function NumberMatchingGame() {
             <div
               className="
                 mt-5
-                text-2xl
-                sm:text-3xl
+                text-3xl
                 font-bold
                 text-yellow-500
               "
@@ -1025,13 +989,10 @@ function NumberMatchingGame() {
                 mt-7
                 bg-green-500
                 text-white
-                px-6
-                py-3
-                sm:px-8
-                sm:py-4
+                px-8
+                py-4
                 rounded-full
-                text-lg
-                sm:text-xl
+                text-xl
                 font-bold
                 shadow-lg
                 hover:bg-green-600
