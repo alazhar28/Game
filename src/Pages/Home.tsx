@@ -28,7 +28,7 @@ function Home() {
             text-blue-600
             mt-8
           ">
-            🎮 Dunia Bermain
+            🎮 KB-TK IA Game
           </h1>
 
           <p className="
