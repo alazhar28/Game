@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type Shape =
   | "triangle"
@@ -9,19 +9,95 @@ type Shape =
   | "oval"
   | "star"
 
-type Pair = {
+type Question = {
   id: number
   name: string
   image: string
-  shape: Shape
+  answer: Shape
+  options: Shape[]
 }
 
-type Card = {
-  id: number
-  pairId: number
-  type: "image" | "shape"
-  matched: boolean
-}
+// =====================================
+// DATA SOAL
+// GANTI GAMBAR PNG DAN BENTUK DI SINI
+// =====================================
+
+const questions: Question[] = [
+  {
+    id: 1,
+    name: "Caping",
+    image: "/images/geometri/caping.png",
+    answer: "triangle",
+    options: ["circle", "triangle", "square"],
+  },
+  {
+    id: 2,
+    name: "Jam",
+    image: "/images/geometri/jam.png",
+    answer: "circle",
+    options: ["square", "circle", "rectangle"],
+  },
+  {
+    id: 3,
+    name: "Buku",
+    image: "/images/geometri/buku.png",
+    answer: "rectangle",
+    options: ["triangle", "rectangle", "star"],
+  },
+  {
+    id: 4,
+    name: "Ubin",
+    image: "/images/geometri/ubin.png",
+    answer: "square",
+    options: ["oval", "square", "circle"],
+  },
+  {
+    id: 5,
+    name: "Telur",
+    image: "/images/geometri/telur.png",
+    answer: "oval",
+    options: ["oval", "triangle", "square"],
+  },
+  {
+    id: 6,
+    name: "Bintang",
+    image: "/images/geometri/bintang.png",
+    answer: "star",
+    options: ["circle", "star", "rectangle"],
+  },
+  {
+    id: 7,
+    name: "Rambu",
+    image: "/images/geometri/rambu.png",
+    answer: "triangle",
+    options: ["triangle", "square", "oval"],
+  },
+  {
+    id: 8,
+    name: "Roda",
+    image: "/images/geometri/roda.png",
+    answer: "circle",
+    options: ["rectangle", "star", "circle"],
+  },
+  {
+    id: 9,
+    name: "Pintu",
+    image: "/images/geometri/pintu.png",
+    answer: "rectangle",
+    options: ["square", "rectangle", "triangle"],
+  },
+  {
+    id: 10,
+    name: "Bantal",
+    image: "/images/geometri/bantal.png",
+    answer: "oval",
+    options: ["star", "oval", "circle"],
+  },
+]
+
+// =====================================
+// NAMA BENTUK
+// =====================================
 
 const shapeNames: Record<Shape, string> = {
   triangle: "Segitiga",
@@ -32,74 +108,71 @@ const shapeNames: Record<Shape, string> = {
   star: "Bintang",
 }
 
-function createCards(pairs: Pair[]): Card[] {
-  const cards = pairs.flatMap((pair) => [
-    {
-      id: pair.id * 2,
-      pairId: pair.id,
-      type: "image" as const,
-      matched: false,
-    },
-    {
-      id: pair.id * 2 + 1,
-      pairId: pair.id,
-      type: "shape" as const,
-      matched: false,
-    },
-  ])
+// =====================================
+// KOMPONEN GAMBAR GEOMETRI
+// =====================================
 
-  // Acak kartu
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[cards[i], cards[j]] = [cards[j], cards[i]]
+function ShapeImage({ shape }: { shape: Shape }) {
+  const colors: Record<Shape, string> = {
+    triangle: "#FBBF24",
+    circle: "#60A5FA",
+    square: "#F9A8D4",
+    rectangle: "#A78BFA",
+    oval: "#4ADE80",
+    star: "#FB923C",
   }
 
-  return cards
-}
-
-function ShapeIcon({ shape }: { shape: Shape }) {
-  const common = {
-    fill: "#FBBF24",
-    stroke: "#D97706",
-    strokeWidth: 3,
-    strokeLinejoin: "round" as const,
-  }
+  const color = colors[shape]
 
   return (
     <svg
       viewBox="0 0 100 100"
-      className="w-24 h-24 md:w-32 md:h-32"
+      className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
     >
       {shape === "triangle" && (
         <polygon
-          points="50,8 5,90 95,90"
-          {...common}
+          points="50,7 5,90 95,90"
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
+          strokeLinejoin="round"
         />
       )}
 
       {shape === "circle" && (
-        <circle cx="50" cy="50" r="40" {...common} />
+        <circle
+          cx="50"
+          cy="50"
+          r="42"
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
+        />
       )}
 
       {shape === "square" && (
         <rect
-          x="10"
-          y="10"
-          width="80"
-          height="80"
-          rx="5"
-          {...common}
+          x="8"
+          y="8"
+          width="84"
+          height="84"
+          rx="4"
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
         />
       )}
 
       {shape === "rectangle" && (
         <rect
-          x="5"
-          y="25"
-          width="90"
-          height="50"
-          rx="5"
-          {...common}
+          x="4"
+          y="23"
+          width="92"
+          height="54"
+          rx="4"
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
         />
       )}
 
@@ -109,960 +182,580 @@ function ShapeIcon({ shape }: { shape: Shape }) {
           cy="50"
           rx="45"
           ry="30"
-          {...common}
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
         />
       )}
 
       {shape === "star" && (
         <polygon
-          points="50,5 62,36 95,38 70,60 78,93 50,75 22,93 30,60 5,38 38,36"
-          {...common}
+          points="50,3 62,36 97,36 69,57 80,93 50,71 20,93 31,57 3,36 38,36"
+          fill={color}
+          stroke="#64748B"
+          strokeWidth="3"
+          strokeLinejoin="round"
         />
       )}
     </svg>
   )
 }
 
+// =====================================
+// GAME UTAMA
+// =====================================
+
 function MatchingGame() {
-  const [pairs, setPairs] = useState<Pair[]>([])
-
-  const [cards, setCards] = useState<Card[]>([])
-
-  const [selected, setSelected] = useState<number[]>([])
+  const [questionIndex, setQuestionIndex] = useState(0)
 
   const [score, setScore] = useState(0)
 
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [seconds, setSeconds] = useState(0)
 
-  const [isChecking, setIsChecking] = useState(false)
+  const [started, setStarted] = useState(false)
 
-  const [imageName, setImageName] = useState("")
+  const [finished, setFinished] = useState(false)
 
-  const [imageFile, setImageFile] = useState("")
+  const [dragging, setDragging] = useState(false)
 
-  const [shape, setShape] = useState<Shape>("triangle")
+  const [feedback, setFeedback] = useState("")
 
-  const [error, setError] = useState("")
+  const [line, setLine] = useState<{
+    x1: number
+    y1: number
+    x2: number
+    y2: number
+    correct: boolean
+  } | null>(null)
 
-  const finished =
-    cards.length > 0 &&
-    cards.every((card) => card.matched)
+  const boardRef = useRef<HTMLDivElement>(null)
 
-  // TAMBAH GAMBAR PNG
-  const addPair = () => {
-    if (!imageName.trim()) {
-      setError("Masukkan nama gambar terlebih dahulu!")
-      return
-    }
+  const imageRef = useRef<HTMLDivElement>(null)
 
-    if (!imageFile) {
-      setError("Pilih gambar PNG terlebih dahulu!")
-      return
-    }
+  const optionRefs = useRef<
+    Record<string, HTMLButtonElement | null>
+  >({})
 
-    const newPair: Pair = {
-      id: Date.now(),
-      name: imageName,
-      image: imageFile,
-      shape,
-    }
+  const question = questions[questionIndex]
 
-    setPairs((current) => [...current, newPair])
+  // =====================================
+  // TIMER
+  // =====================================
 
-    setImageName("")
-    setImageFile("")
-    setShape("triangle")
-    setError("")
-    setIsPlaying(false)
-    setCards([])
-    setSelected([])
-    setScore(0)
+  useEffect(() => {
+    if (!started || finished) return
+
+    const timer = setInterval(() => {
+      setSeconds((current) => current + 1)
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [started, finished])
+
+  const formatTime = (value: number) => {
+    const minutes = Math.floor(value / 60)
+    const secs = value % 60
+
+    return (
+      String(minutes).padStart(2, "0") +
+      ":" +
+      String(secs).padStart(2, "0")
+    )
   }
 
-  // UPLOAD FILE
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>
+  // =====================================
+  // POSISI GARIS
+  // =====================================
+
+  const getCenter = (element: HTMLElement) => {
+    const board = boardRef.current
+
+    if (!board) return null
+
+    const boardRect = board.getBoundingClientRect()
+    const rect = element.getBoundingClientRect()
+
+    return {
+      x: rect.left + rect.width / 2 - boardRect.left,
+      y: rect.top + rect.height / 2 - boardRect.top,
+    }
+  }
+
+  // =====================================
+  // MULAI TARIK GARIS
+  // =====================================
+
+  const handleDragStart = (
+    e: React.PointerEvent<HTMLDivElement>
   ) => {
-    const file = e.target.files?.[0]
+    if (!started || finished || dragging) return
 
-    if (!file) return
+    e.preventDefault()
 
-    if (file.type !== "image/png") {
-      setError("Gunakan file gambar PNG ya!")
-      e.target.value = ""
-      return
-    }
+    const board = boardRef.current
+    const image = imageRef.current
 
-    const reader = new FileReader()
+    if (!board || !image) return
 
-    reader.onload = () => {
-      setImageFile(reader.result as string)
-      setError("")
-    }
+    const start = getCenter(image)
 
-    reader.readAsDataURL(file)
+    if (!start) return
+
+    setDragging(true)
+
+    setLine({
+      x1: start.x,
+      y1: start.y,
+      x2: start.x,
+      y2: start.y,
+      correct: false,
+    })
   }
 
-  // HAPUS GAMBAR
-  const removePair = (id: number) => {
-    setPairs((current) =>
-      current.filter((pair) => pair.id !== id)
+  // =====================================
+  // GERAKAN GARIS
+  // =====================================
+
+  const handleDragMove = (
+    e: React.PointerEvent<HTMLDivElement>
+  ) => {
+    if (!dragging || !line || !boardRef.current) return
+
+    const rect = boardRef.current.getBoundingClientRect()
+
+    setLine((current) =>
+      current
+        ? {
+            ...current,
+            x2: e.clientX - rect.left,
+            y2: e.clientY - rect.top,
+          }
+        : null
     )
-
-    setIsPlaying(false)
-    setCards([])
-    setSelected([])
-    setScore(0)
   }
 
-  // MULAI GAME
-  const startGame = () => {
-    if (pairs.length < 2) {
-      setError("Tambahkan minimal 2 gambar terlebih dahulu!")
-      return
-    }
+  // =====================================
+  // SELESAI MENARIK GARIS
+  // =====================================
 
-    setCards(createCards(pairs))
-    setSelected([])
-    setScore(0)
-    setIsChecking(false)
-    setIsPlaying(true)
-    setError("")
-  }
+  const handleDragEnd = (
+    e: React.PointerEvent<HTMLButtonElement>,
+    shape: Shape
+  ) => {
+    if (!dragging || !started || finished) return
 
-  // ULANGI GAME
-  const restartGame = () => {
-    setCards(createCards(pairs))
-    setSelected([])
-    setScore(0)
-    setIsChecking(false)
-  }
+    e.preventDefault()
 
-  // KLIK KARTU
-  const handleCardClick = (id: number) => {
-    if (isChecking || finished) return
+    const image = imageRef.current
+    const option = optionRefs.current[shape]
 
-    if (selected.includes(id)) return
+    if (!image || !option) return
 
-    const clickedCard = cards.find(
-      (card) => card.id === id
-    )
+    const start = getCenter(image)
+    const end = getCenter(option)
 
-    if (!clickedCard || clickedCard.matched) return
+    if (!start || !end) return
 
-    const newSelected = [...selected, id]
+    setDragging(false)
 
-    setSelected(newSelected)
+    if (shape === question.answer) {
+      setLine({
+        x1: start.x,
+        y1: start.y,
+        x2: end.x,
+        y2: end.y,
+        correct: true,
+      })
 
-    if (newSelected.length === 2) {
-      setIsChecking(true)
+      setFeedback("Hebat! Jawaban Benar! 🎉")
 
-      const first = cards.find(
-        (card) => card.id === newSelected[0]
-      )
-
-      const second = cards.find(
-        (card) => card.id === newSelected[1]
-      )
-
-      const isMatch =
-        first?.pairId === second?.pairId &&
-        first?.type !== second?.type
+      setScore((current) => current + 10)
 
       setTimeout(() => {
-        if (isMatch) {
-          setCards((current) =>
-            current.map((card) =>
-              newSelected.includes(card.id)
-                ? { ...card, matched: true }
-                : card
-            )
-          )
-
-          setScore((current) => current + 1)
+        if (questionIndex + 1 >= questions.length) {
+          setFinished(true)
+        } else {
+          setQuestionIndex((current) => current + 1)
+          setFeedback("")
+          setLine(null)
         }
+      }, 1000)
+    } else {
+      setLine({
+        x1: start.x,
+        y1: start.y,
+        x2: end.x,
+        y2: end.y,
+        correct: false,
+      })
 
-        setSelected([])
-        setIsChecking(false)
+      setFeedback("Belum tepat, coba lagi ya! 💪")
+
+      setTimeout(() => {
+        setLine(null)
+        setFeedback("")
       }, 700)
     }
   }
 
-  const columns =
-    cards.length <= 8
-      ? 4
-      : cards.length <= 12
-      ? 4
-      : 5
+  // =====================================
+  // RESET GAME
+  // =====================================
+
+  const restartGame = () => {
+    setQuestionIndex(0)
+    setScore(0)
+    setSeconds(0)
+    setStarted(false)
+    setFinished(false)
+    setDragging(false)
+    setFeedback("")
+    setLine(null)
+  }
+
+  // =====================================
+  // TAMPILAN
+  // =====================================
 
   return (
     <div className="min-h-screen bg-sky-100 p-4 md:p-6">
 
-      {/* HEADER */}
+      <div className="max-w-5xl mx-auto">
 
-      <div className="max-w-5xl mx-auto text-center">
+        {/* JUDUL */}
 
-        <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
-          🔷 Cocokkan Bentuk Geometri
-        </h1>
+        <div className="text-center mb-6">
 
-        <p className="text-lg text-gray-600 mt-2">
-          Yuk, cocokkan gambar dengan bentuknya!
-        </p>
+          <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
+            🔷 Cocokkan Bentuk Geometri
+          </h1>
 
-        <div className="flex justify-center gap-3 mt-5 flex-wrap">
-          <div className="bg-white px-5 py-3 rounded-full shadow font-bold">
-            🎯 Pasangan: {score}/{pairs.length}
-          </div>
+          <p className="text-lg text-gray-600 mt-2">
+            Tarik garis gambar ke bentuk yang sesuai!
+          </p>
 
-          <div className="bg-white px-5 py-3 rounded-full shadow font-bold">
-            🃏 Kartu: {cards.length}
-          </div>
         </div>
 
-      </div>
+        {/* INFORMASI GAME */}
 
-      {/* MENU GURU */}
+        <div className="flex justify-center gap-3 mb-6">
 
-      {!isPlaying && (
-        <div className="max-w-3xl mx-auto mt-8">
+          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <p className="text-sm text-gray-500">SOAL</p>
 
-          <div className="bg-white rounded-3xl shadow-lg p-5 md:p-7">
-
-            <h2 className="text-2xl font-bold text-blue-600 mb-2">
-              ⚙️ Pengaturan Gambar
-            </h2>
-
-            <p className="text-gray-600 mb-5">
-              Guru dapat mengunggah gambar PNG dan menentukan
-              bentuk geometri yang sesuai.
+            <p className="text-2xl font-bold text-blue-600">
+              {questionIndex + (finished ? 0 : 1)}/10
             </p>
+          </div>
 
-            <div className="space-y-4">
+          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <p className="text-sm text-gray-500">SKOR</p>
 
-              <div>
-                <label className="font-bold block mb-2">
-                  1. Nama Gambar
-                </label>
+            <p className="text-2xl font-bold text-green-500">
+              {score}
+            </p>
+          </div>
 
-                <input
-                  type="text"
-                  value={imageName}
-                  onChange={(e) => setImageName(e.target.value)}
-                  placeholder="Contoh: Caping"
-                  className="w-full border-2 rounded-xl p-3"
-                />
-              </div>
+          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <p className="text-sm text-gray-500">WAKTU</p>
 
-              <div>
-                <label className="font-bold block mb-2">
-                  2. Upload Gambar PNG
-                </label>
+            <p className="text-2xl font-bold text-orange-500">
+              {formatTime(seconds)}
+            </p>
+          </div>
 
-                <input
-                  type="file"
-                  accept="image/png"
-                  onChange={handleImageUpload}
-                  className="w-full border-2 rounded-xl p-3"
-                />
+        </div>
 
-                {imageFile && (
-                  <div className="mt-3 bg-sky-50 rounded-2xl p-4 flex justify-center">
-                    <img
-                      src={imageFile}
-                      alt="Preview gambar"
-                      className="w-36 h-36 object-contain"
-                    />
-                  </div>
-                )}
-              </div>
+        {/* PROGRESS */}
 
-              <div>
-                <label className="font-bold block mb-2">
-                  3. Pilih Bentuk Geometri
-                </label>
+        <div className="bg-white rounded-full h-4 overflow-hidden mb-6 shadow">
+          <div
+            className="bg-green-400 h-full transition-all duration-500"
+            style={{
+              width: `${(score / 100) * 100}%`,
+            }}
+          />
+        </div>
 
-                <select
-                  value={shape}
-                  onChange={(e) =>
-                    setShape(e.target.value as Shape)
+        {/* PAPAN PERMAINAN */}
+
+        {!finished && (
+
+          <div
+            ref={boardRef}
+            onPointerMove={handleDragMove}
+            className="
+              relative
+              bg-white
+              rounded-3xl
+              shadow-xl
+              p-4
+              md:p-8
+              min-h-[430px]
+              overflow-hidden
+              select-none
+            "
+          >
+
+            {/* SVG GARIS */}
+
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none z-20"
+              style={{ overflow: "visible" }}
+            >
+              {line && (
+                <line
+                  x1={line.x1}
+                  y1={line.y1}
+                  x2={line.x2}
+                  y2={line.y2}
+                  stroke={
+                    line.correct
+                      ? "#22C55E"
+                      : dragging
+                      ? "#3B82F6"
+                      : "#EF4444"
                   }
-                  className="w-full border-2 rounded-xl p-3 bg-white"
-                >
-                  {Object.entries(shapeNames).map(
-                    ([value, name]) => (
-                      <option key={value} value={value}>
-                        {name}
-                      </option>
-                    )
-                  )}
-                </select>
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray="10 7"
+                />
+              )}
+            </svg>
 
-                <div className="flex justify-center mt-3">
-                  <ShapeIcon shape={shape} />
+            <div className="grid grid-cols-2 gap-4 md:gap-10 relative z-10">
+
+              {/* KOLOM GAMBAR */}
+
+              <div className="flex flex-col items-center">
+
+                <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
+                  🖼️ GAMBAR
+                </h2>
+
+                <div
+                  ref={imageRef}
+                  onPointerDown={handleDragStart}
+                  className="
+                    w-full
+                    max-w-[220px]
+                    aspect-square
+                    bg-yellow-50
+                    border-4
+                    border-yellow-300
+                    rounded-3xl
+                    flex
+                    flex-col
+                    items-center
+                    justify-center
+                    p-3
+                    cursor-grab
+                    active:cursor-grabbing
+                    touch-none
+                    hover:scale-105
+                    transition
+                  "
+                >
+
+                  <img
+                    src={question.image}
+                    alt={question.name}
+                    draggable={false}
+                    className="w-full h-4/5 object-contain pointer-events-none"
+                  />
+
+                  <p className="font-bold text-gray-700 text-lg">
+                    {question.name}
+                  </p>
+
                 </div>
+
+                <p className="text-sm text-gray-500 mt-4 text-center">
+                  👆 Tarik garis dari sini
+                </p>
+
               </div>
 
-              {error && (
-                <p className="text-red-500 font-semibold">
-                  {error}
-                </p>
-              )}
+              {/* KOLOM BENTUK */}
 
-              <button
-                onClick={addPair}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold p-4 rounded-2xl text-lg"
-              >
-                ➕ Tambahkan Pasangan
-              </button>
+              <div className="flex flex-col items-center">
 
-            </div>
+                <h2 className="text-lg md:text-2xl font-bold text-purple-600 mb-5">
+                  🔷 BENTUK
+                </h2>
 
-            {/* DAFTAR GAMBAR */}
+                <div className="w-full max-w-[220px] flex flex-col gap-3">
 
-            <div className="mt-7">
-
-              <h3 className="font-bold text-xl mb-3">
-                📋 Daftar Gambar ({pairs.length})
-              </h3>
-
-              {pairs.length === 0 && (
-                <p className="text-gray-500 text-center py-5">
-                  Belum ada gambar. Silakan tambahkan gambar PNG.
-                </p>
-              )}
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-
-                {pairs.map((pair) => (
-                  <div
-                    key={pair.id}
-                    className="border rounded-2xl p-3 text-center bg-sky-50"
-                  >
-                    <img
-                      src={pair.image}
-                      alt={pair.name}
-                      className="w-full h-24 object-contain"
-                    />
-
-                    <p className="font-bold mt-2">
-                      {pair.name}
-                    </p>
-
-                    <p className="text-sm text-gray-600">
-                      {shapeNames[pair.shape]}
-                    </p>
+                  {question.options.map((shape) => (
 
                     <button
-                      onClick={() => removePair(pair.id)}
-                      className="text-red-500 text-sm font-bold mt-2"
+                      key={shape}
+                      ref={(element) => {
+                        optionRefs.current[shape] = element
+                      }}
+                      onPointerUp={(e) =>
+                        handleDragEnd(e, shape)
+                      }
+                      className="
+                        w-full
+                        h-28
+                        md:h-32
+                        bg-purple-50
+                        border-4
+                        border-purple-200
+                        rounded-2xl
+                        flex
+                        flex-col
+                        items-center
+                        justify-center
+                        hover:bg-purple-100
+                        active:bg-green-100
+                        transition
+                        touch-none
+                      "
                     >
-                      🗑 Hapus
+
+                      <ShapeImage shape={shape} />
+
+                      <span className="font-bold text-gray-600 text-sm">
+                        {shapeNames[shape]}
+                      </span>
+
                     </button>
-                  </div>
-                ))}
+
+                  ))}
+
+                </div>
 
               </div>
 
             </div>
 
+            {/* FEEDBACK */}
+
+            {feedback && (
+              <div className={`
+                mt-5
+                text-center
+                font-bold
+                text-xl
+                p-3
+                rounded-2xl
+                ${
+                  feedback.includes("Benar")
+                    ? "bg-green-100 text-green-600"
+                    : "bg-orange-100 text-orange-600"
+                }
+              `}>
+                {feedback}
+              </div>
+            )}
+
+          </div>
+        )}
+
+        {/* HALAMAN MULAI */}
+
+        {!started && !finished && (
+          <div className="bg-white rounded-3xl p-7 text-center shadow-xl mt-6">
+
+            <div className="text-6xl mb-3">🎮</div>
+
+            <h2 className="text-2xl font-bold text-blue-600">
+              Siap Bermain?
+            </h2>
+
+            <p className="text-gray-600 mt-2">
+              Ada 10 gambar yang harus dicocokkan.
+              Tarik garis menuju bentuk yang benar!
+            </p>
+
             <button
-              onClick={startGame}
-              disabled={pairs.length < 2}
-              className="w-full mt-7 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white text-xl font-bold p-4 rounded-2xl"
+              onClick={() => setStarted(true)}
+              className="
+                mt-6
+                bg-green-500
+                hover:bg-green-600
+                text-white
+                text-xl
+                font-bold
+                px-10
+                py-4
+                rounded-full
+                shadow-lg
+                active:scale-95
+              "
             >
               🚀 MULAI BERMAIN
             </button>
 
           </div>
-        </div>
-      )}
+        )}
 
-      {/* PAPAN PERMAINAN */}
+        {/* HASIL AKHIR */}
 
-      {isPlaying && (
-        <div className="max-w-5xl mx-auto mt-8">
+        {finished && (
 
-          <div
-            className="grid gap-3 md:gap-5"
-            style={{
-              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-            }}
-          >
+          <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
 
-            {cards.map((card) => {
-              const isSelected = selected.includes(card.id)
+            <div className="text-7xl">🏆</div>
 
-              const pair = pairs.find(
-                (item) => item.id === card.pairId
-              )
+            <h2 className="text-4xl font-bold text-green-500 mt-3">
+              LUAR BIASA!
+            </h2>
 
-              const isVisible = isSelected || card.matched
+            <p className="text-lg text-gray-600 mt-2">
+              Kamu berhasil menyelesaikan 10 soal!
+            </p>
 
-              return (
-                <button
-                  key={card.id}
-                  disabled={card.matched || isChecking}
-                  onClick={() => handleCardClick(card.id)}
-                  className={`
-                    aspect-square rounded-2xl md:rounded-3xl
-                    shadow-lg flex flex-col items-center
-                    justify-center p-2 transition
-                    ${
-                      card.matched
-                        ? "bg-green-100 border-4 border-green-400"
-                        : isVisible
-                        ? "bg-white border-4 border-blue-400"
-                        : "bg-white hover:bg-yellow-50 hover:scale-105"
-                    }
-                  `}
-                >
+            <div className="grid grid-cols-2 gap-4 mt-7">
 
-                  {isVisible ? (
-                    card.type === "image" ? (
-                      <>
-                        <img
-                          src={pair?.image}
-                          alt={pair?.name}
-                          className="w-full h-3/4 object-contain"
-                        />
-                        <span className="text-xs md:text-base font-bold text-gray-600">
-                          {pair?.name}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <ShapeIcon
-                          shape={pair?.shape ?? "triangle"}
-                        />
-                        <span className="text-xs md:text-base font-bold text-gray-600 text-center">
-                          {shapeNames[pair?.shape ?? "triangle"]}
-                        </span>
-                      </>
-                    )
-                  ) : (
-                    <span className="text-4xl md:text-6xl">
-                      ❓
-                    </span>
-                  )}
+              <div className="bg-yellow-50 p-5 rounded-2xl">
+                <p className="text-gray-500">SKOR AKHIR</p>
+                <p className="text-4xl font-bold text-orange-500">
+                  {score}
+                </p>
+              </div>
 
-                </button>
-              )
-            })}
-
-          </div>
-
-          {/* SELESAI */}
-
-          {finished && (
-            <div className="bg-white rounded-3xl shadow-xl p-7 mt-8 text-center">
-
-              <div className="text-7xl">🏆</div>
-
-              <h2 className="text-4xl font-bold text-green-500 mt-3">
-                Hebat Sekali!
-              </h2>
-
-              <p className="text-xl mt-3">
-                Semua bentuk berhasil dicocokkan!
-              </p>
-
-              <p className="text-2xl font-bold mt-4">
-                ⭐ Skor: {score}
-              </p>
-
-              <button
-                onClick={restartGame}
-                className="mt-6 bg-blue-500 text-white px-8 py-4 rounded-full text-xl font-bold"
-              >
-                🔄 Main Lagi
-              </button>
+              <div className="bg-blue-50 p-5 rounded-2xl">
+                <p className="text-gray-500">WAKTU</p>
+                <p className="text-4xl font-bold text-blue-500">
+                  {formatTime(seconds)}
+                </p>
+              </div>
 
             </div>
-          )}
-
-          <div className="flex justify-center gap-3 flex-wrap mt-8">
 
             <button
               onClick={restartGame}
-              className="bg-yellow-400 px-6 py-3 rounded-full font-bold shadow"
+              className="
+                mt-8
+                bg-blue-500
+                hover:bg-blue-600
+                text-white
+                px-10
+                py-4
+                rounded-full
+                text-xl
+                font-bold
+              "
             >
-              🔄 Acak Ulang
-            </button>
-
-            <button
-              onClick={() => setIsPlaying(false)}
-              className="bg-white px-6 py-3 rounded-full font-bold shadow"
-            >
-              ⚙️ Pengaturan Guru
+              🔄 MAIN LAGI
             </button>
 
           </div>
+        )}
 
+        {/* PETUNJUK */}
+
+        <div className="text-center text-gray-500 text-sm mt-6">
+          🌈 Belajar bentuk geometri sambil bermain!
         </div>
-      )}
+
+      </div>
 
     </div>
   )
 }
 
 export default MatchingGame
-
-
-// import { useState } from "react"
-
-// type Card = {
-//   id: number
-//   emoji: string
-//   matched: boolean
-// }
-
-// const levelEmojis = [
-//   ["🦄", "🐱", "🐰"],
-
-//   ["🦄", "🐱", "🐰", "🐶", "🐼", "🦊"],
-
-//   [
-//     "🦄",
-//     "🐱",
-//     "🐰",
-//     "🐶",
-//     "🐼",
-//     "🦊",
-//     "🐸",
-//     "🐯",
-//     "🐨",
-//   ],
-
-//   [
-//     "🦄",
-//     "🐱",
-//     "🐰",
-//     "🐶",
-//     "🐼",
-//     "🦊",
-//     "🐸",
-//     "🐯",
-//     "🐨",
-//     "🐷",
-//     "🐮",
-//     "🐵",
-//   ],
-
-//   [
-//     "🦄",
-//     "🐱",
-//     "🐰",
-//     "🐶",
-//     "🐼",
-//     "🦊",
-//     "🐸",
-//     "🐯",
-//     "🐨",
-//     "🐷",
-//     "🐮",
-//     "🐵",
-//     "🐔",
-//     "🐙",
-//     "🦁",
-//   ],
-// ]
-
-// const columnsByLevel = [
-//   3, // Level 1 → 3 x 2
-//   4, // Level 2 → 4 x 3
-//   6, // Level 3 → 6 x 3
-//   6, // Level 4 → 6 x 4
-//   6, // Level 5 → 6 x 5
-// ]
-
-// function createCards(level: number): Card[] {
-//   const emojis = levelEmojis[level - 1]
-
-//   const cards = emojis.flatMap((emoji, index) => [
-//     {
-//       id: index * 2 + 1,
-//       emoji,
-//       matched: false,
-//     },
-//     {
-//       id: index * 2 + 2,
-//       emoji,
-//       matched: false,
-//     },
-//   ])
-
-//   // Acak isi kartu, tetapi grid tetap rapi
-//   return [...cards].sort(() => Math.random() - 0.5)
-// }
-
-// function MatchingGame() {
-//   const [level, setLevel] = useState(1)
-
-//   const [cards, setCards] = useState<Card[]>(() =>
-//     createCards(1)
-//   )
-
-//   const [selected, setSelected] = useState<number[]>([])
-
-//   const [score, setScore] = useState(0)
-
-//   const [showLevelComplete, setShowLevelComplete] =
-//     useState(false)
-
-//   const handleCardClick = (id: number) => {
-//     if (selected.length === 2) return
-
-//     if (showLevelComplete) return
-
-//     const card = cards.find(
-//       (card) => card.id === id
-//     )
-
-//     if (
-//       !card ||
-//       card.matched ||
-//       selected.includes(id)
-//     ) {
-//       return
-//     }
-
-//     const newSelected = [...selected, id]
-
-//     setSelected(newSelected)
-
-//     if (newSelected.length === 2) {
-//       const firstCard = cards.find(
-//         (card) => card.id === newSelected[0]
-//       )
-
-//       const secondCard = cards.find(
-//         (card) => card.id === newSelected[1]
-//       )
-
-//       if (
-//         firstCard?.emoji === secondCard?.emoji
-//       ) {
-//         setTimeout(() => {
-//           const updatedCards = cards.map(
-//             (card) =>
-//               newSelected.includes(card.id)
-//                 ? {
-//                     ...card,
-//                     matched: true,
-//                   }
-//                 : card
-//           )
-
-//           setCards(updatedCards)
-
-//           setScore(
-//             (currentScore) =>
-//               currentScore + 1
-//           )
-
-//           setSelected([])
-
-//           const finished =
-//             updatedCards.every(
-//               (card) => card.matched
-//             )
-
-//           if (finished) {
-//             setShowLevelComplete(true)
-//           }
-//         }, 500)
-//       } else {
-//         setTimeout(() => {
-//           setSelected([])
-//         }, 800)
-//       }
-//     }
-//   }
-
-//   const nextLevel = () => {
-//     if (level < levelEmojis.length) {
-//       const next = level + 1
-
-//       setLevel(next)
-
-//       setCards(createCards(next))
-
-//       setSelected([])
-
-//       setShowLevelComplete(false)
-//     }
-//   }
-
-//   const restartGame = () => {
-//     setLevel(1)
-
-//     setCards(createCards(1))
-
-//     setSelected([])
-
-//     setScore(0)
-
-//     setShowLevelComplete(false)
-//   }
-
-//   const totalPairs =
-//     levelEmojis[level - 1].length
-
-//   const totalCards = totalPairs * 2
-
-//   const columns =
-//     columnsByLevel[level - 1]
-
-//   return (
-//     <div className="min-h-screen bg-sky-100 p-4 md:p-6">
-
-//       {/* HEADER */}
-
-//       <div className="max-w-5xl mx-auto text-center">
-
-//         <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
-//           🧩 Cari Pasangan
-//         </h1>
-
-//         <p className="text-lg md:text-xl text-gray-600 mt-2">
-//           Yuk cari gambar yang sama!
-//         </p>
-
-//         {/* INFO */}
-
-//         <div className="flex justify-center gap-3 mt-5 flex-wrap">
-
-//           <div className="bg-white px-5 py-3 rounded-full shadow">
-//             <span className="text-lg font-bold">
-//               🎯 Level {level}
-//             </span>
-//           </div>
-
-//           <div className="bg-white px-5 py-3 rounded-full shadow">
-//             <span className="text-lg font-bold">
-//               ⭐ Skor: {score}
-//             </span>
-//           </div>
-
-//           <div className="bg-white px-5 py-3 rounded-full shadow">
-//             <span className="text-lg font-bold">
-//               🃏 {totalCards} Kartu
-//             </span>
-//           </div>
-
-//         </div>
-
-//       </div>
-
-//       {/* CARD GRID */}
-
-//       <div
-//         className="
-//           max-w-5xl
-//           mx-auto
-//           mt-8
-//           grid
-//           gap-4
-//           md:gap-5
-//         "
-//         style={{
-//           gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-//         }}
-//       >
-
-//         {cards.map((card) => {
-
-//           const isSelected =
-//             selected.includes(card.id)
-
-//           return (
-//             <button
-//               key={card.id}
-//               onClick={() =>
-//                 handleCardClick(card.id)
-//               }
-//               className={`
-//                 aspect-square
-//                 bg-white
-//                 rounded-3xl
-//                 shadow-lg
-//                 flex
-//                 items-center
-//                 justify-center
-//                 text-4xl
-//                 md:text-6xl
-//                 transition
-//                 duration-200
-//                 hover:scale-105
-//                 active:scale-95
-//                 ${
-//                   card.matched
-//                     ? "bg-green-100"
-//                     : ""
-//                 }
-//               `}
-//             >
-
-//               {card.matched ||
-//               isSelected ? (
-//                 card.emoji
-//               ) : (
-//                 <span className="text-3xl md:text-5xl">
-//                   ❓
-//                 </span>
-//               )}
-
-//             </button>
-//           )
-//         })}
-
-//       </div>
-
-//       {/* LEVEL SELESAI */}
-
-//       {showLevelComplete && (
-
-//         <div className="
-//           fixed
-//           inset-0
-//           bg-black/30
-//           flex
-//           items-center
-//           justify-center
-//           p-5
-//         ">
-
-//           <div className="
-//             bg-white
-//             rounded-3xl
-//             shadow-2xl
-//             p-8
-//             text-center
-//             max-w-md
-//             w-full
-//           ">
-
-//             <div className="text-7xl">
-//               🎉
-//             </div>
-
-//             <h2 className="
-//               text-4xl
-//               font-bold
-//               text-green-500
-//               mt-3
-//             ">
-//               Hebat!
-//             </h2>
-
-//             <p className="text-xl mt-3">
-//               Level {level} berhasil!
-//             </p>
-
-//             <p className="
-//               text-lg
-//               text-gray-600
-//               mt-2
-//             ">
-//               Semua pasangan sudah ditemukan.
-//             </p>
-
-//             <div className="
-//               text-2xl
-//               font-bold
-//               mt-4
-//             ">
-//               ⭐ Skor: {score}
-//             </div>
-
-//             {level <
-//             levelEmojis.length ? (
-
-//               <button
-//                 onClick={nextLevel}
-//                 className="
-//                   mt-6
-//                   bg-blue-500
-//                   text-white
-//                   px-8
-//                   py-4
-//                   rounded-full
-//                   text-xl
-//                   font-bold
-//                   hover:bg-blue-600
-//                   active:scale-95
-//                   transition
-//                 "
-//               >
-//                 🚀 Level Berikutnya
-//               </button>
-
-//             ) : (
-
-//               <div>
-
-//                 <p className="
-//                   text-2xl
-//                   font-bold
-//                   text-yellow-500
-//                   mt-5
-//                 ">
-//                   🏆 Semua Level Selesai!
-//                 </p>
-
-//                 <button
-//                   onClick={restartGame}
-//                   className="
-//                     mt-5
-//                     bg-blue-500
-//                     text-white
-//                     px-8
-//                     py-4
-//                     rounded-full
-//                     text-xl
-//                     font-bold
-//                     hover:bg-blue-600
-//                     active:scale-95
-//                     transition
-//                   "
-//                 >
-//                   🔄 Main Lagi
-//                 </button>
-
-//               </div>
-
-//             )}
-
-//           </div>
-
-//         </div>
-//       )}
-
-//       {/* RESET */}
-
-//       <div className="text-center mt-8">
-
-//         <button
-//           onClick={restartGame}
-//           className="
-//             bg-white
-//             px-6
-//             py-3
-//             rounded-full
-//             shadow
-//             font-bold
-//             text-gray-600
-//             hover:bg-gray-50
-//           "
-//         >
-//           🔄 Ulangi dari Level 1
-//         </button>
-
-//       </div>
-
-//     </div>
-//   )
-// }
-
-// export default MatchingGame
