@@ -74,7 +74,7 @@ const questions: Question[] = [
   {
     id: 8,
     name: "tv",
-    image: "/images/geometri/roda.png",
+    image: "/images/geometri/tv.png",
     answer: "rectangle",
     options: ["rectangle", "star", "square"],
   },
@@ -83,12 +83,12 @@ const questions: Question[] = [
     name: "Pintu",
     image: "/images/geometri/pintu.png",
     answer: "rectangle",
-    options: ["square", "rectangle", "triangle"],
+    options: ["star", "rectangle", "triangle"],
   },
   {
     id: 10,
     name: "donat",
-    image: "/images/geometri/bantal.png",
+    image: "/images/geometri/donat.png",
     answer: "circle",
     options: ["star", "oval", "circle"],
   },
@@ -426,13 +426,13 @@ function MatchingGame() {
 
           <div className="text-center mb-6">
 
-            <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
+            {/* <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
               🔷 Cocokkan Bentuk Geometri
-            </h1>
-
+            </h1> */}
+{/* 
             <p className="text-lg text-gray-600 mt-2">
               Tarik garis gambar ke bentuk yang sesuai!
-            </p>
+            </p> */}
 
           </div>
 
@@ -698,7 +698,16 @@ function MatchingGame() {
 
             <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
 
-              <div className="text-7xl">🏆</div>
+              {/* <div className="text-7xl">🏆</div> */}
+
+              <div className="flex justify-center">
+                <img 
+                src="/images/goodjob.png"
+                alt="Anak juara"
+                className="w-64 md:w-80 h-auto object-contain"
+                />
+                </div>
+
 
               <h2 className="text-4xl font-bold text-green-500 mt-3">
                 LUAR BIASA!
