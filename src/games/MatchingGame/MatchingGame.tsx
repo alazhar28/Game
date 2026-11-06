@@ -338,6 +338,57 @@ function MatchingGame() {
   // SELESAI MENARIK GARIS
   // =====================================
 
+  
+const handleDragEnd = (
+  e: React.PointerEvent<HTMLButtonElement>,
+  shape: Shape
+) => {
+  if (!dragging || !started || finished) return
+
+  e.preventDefault()
+
+  const image = imageRef.current
+  const option = optionRefs.current[shape]
+
+  if (!image || !option) return
+
+  const start = getCenter(image)
+  const end = getCenter(option)
+
+  if (!start || !end) return
+
+  setDragging(false)
+
+  const isCorrect = shape === question.answer
+
+  setLine({
+    x1: start.x,
+    y1: start.y,
+    x2: end.x,
+    y2: end.y,
+    correct: isCorrect,
+  })
+
+  if (isCorrect) {
+    setScore((current) => current + 10)
+    setFeedback("Hebat! Jawaban Benar! 🎉")
+  } else {
+    setFeedback("Tidak apa-apa, ayo lanjut! 😊")
+  }
+
+  // BENAR ATAU SALAH TETAP LANJUT
+  setTimeout(() => {
+    if (questionIndex + 1 >= questions.length) {
+      setFinished(true)
+    } else {
+      setQuestionIndex((current) => current + 1)
+    }
+
+    setFeedback("")
+    setLine(null)
+  }, 1000)
+}
+
   // const handleDragEnd = (
   //   e: React.PointerEvent<HTMLButtonElement>,
   //   shape: Shape
