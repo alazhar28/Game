@@ -19,7 +19,6 @@ type Question = {
 
 // =====================================
 // DATA SOAL
-// GANTI GAMBAR PNG DAN BENTUK DI SINI
 // =====================================
 
 const questions: Question[] = [
@@ -207,17 +206,11 @@ function ShapeImage({ shape }: { shape: Shape }) {
 
 function MatchingGame() {
   const [questionIndex, setQuestionIndex] = useState(0)
-
   const [score, setScore] = useState(0)
-
   const [seconds, setSeconds] = useState(0)
-
   const [started, setStarted] = useState(false)
-
   const [finished, setFinished] = useState(false)
-
   const [dragging, setDragging] = useState(false)
-
   const [feedback, setFeedback] = useState("")
 
   const [line, setLine] = useState<{
@@ -229,7 +222,6 @@ function MatchingGame() {
   } | null>(null)
 
   const boardRef = useRef<HTMLDivElement>(null)
-
   const imageRef = useRef<HTMLDivElement>(null)
 
   const optionRefs = useRef<
@@ -338,116 +330,55 @@ function MatchingGame() {
   // SELESAI MENARIK GARIS
   // =====================================
 
-  
-const handleDragEnd = (
-  e: React.PointerEvent<HTMLButtonElement>,
-  shape: Shape
-) => {
-  if (!dragging || !started || finished) return
+  const handleDragEnd = (
+    e: React.PointerEvent<HTMLButtonElement>,
+    shape: Shape
+  ) => {
+    if (!dragging || !started || finished) return
 
-  e.preventDefault()
+    e.preventDefault()
 
-  const image = imageRef.current
-  const option = optionRefs.current[shape]
+    const image = imageRef.current
+    const option = optionRefs.current[shape]
 
-  if (!image || !option) return
+    if (!image || !option) return
 
-  const start = getCenter(image)
-  const end = getCenter(option)
+    const start = getCenter(image)
+    const end = getCenter(option)
 
-  if (!start || !end) return
+    if (!start || !end) return
 
-  setDragging(false)
+    setDragging(false)
 
-  const isCorrect = shape === question.answer
+    const isCorrect = shape === question.answer
 
-  setLine({
-    x1: start.x,
-    y1: start.y,
-    x2: end.x,
-    y2: end.y,
-    correct: isCorrect,
-  })
+    setLine({
+      x1: start.x,
+      y1: start.y,
+      x2: end.x,
+      y2: end.y,
+      correct: isCorrect,
+    })
 
-  if (isCorrect) {
-    setScore((current) => current + 10)
-    setFeedback("Hebat! Jawaban Benar! 🎉")
-  } else {
-    setFeedback("Tidak apa-apa, ayo lanjut! 😊")
-  }
-
-  // BENAR ATAU SALAH TETAP LANJUT
-  setTimeout(() => {
-    if (questionIndex + 1 >= questions.length) {
-      setFinished(true)
+    if (isCorrect) {
+      setScore((current) => current + 10)
+      setFeedback("Hebat! Jawaban Benar! 🎉")
     } else {
-      setQuestionIndex((current) => current + 1)
+      setFeedback("Tidak apa-apa, ayo lanjut! 😊")
     }
 
-    setFeedback("")
-    setLine(null)
-  }, 1000)
-}
+    // BENAR ATAU SALAH TETAP LANJUT
+    setTimeout(() => {
+      if (questionIndex + 1 >= questions.length) {
+        setFinished(true)
+      } else {
+        setQuestionIndex((current) => current + 1)
+      }
 
-  // const handleDragEnd = (
-  //   e: React.PointerEvent<HTMLButtonElement>,
-  //   shape: Shape
-  // ) => {
-  //   if (!dragging || !started || finished) return
-
-  //   e.preventDefault()
-
-  //   const image = imageRef.current
-  //   const option = optionRefs.current[shape]
-
-  //   if (!image || !option) return
-
-  //   const start = getCenter(image)
-  //   const end = getCenter(option)
-
-  //   if (!start || !end) return
-
-  //   setDragging(false)
-
-  //   if (shape === question.answer) {
-  //     setLine({
-  //       x1: start.x,
-  //       y1: start.y,
-  //       x2: end.x,
-  //       y2: end.y,
-  //       correct: true,
-  //     })
-
-  //     setFeedback("Hebat! Jawaban Benar! 🎉")
-
-  //     setScore((current) => current + 10)
-
-  //     setTimeout(() => {
-  //       if (questionIndex + 1 >= questions.length) {
-  //         setFinished(true)
-  //       } else {
-  //         setQuestionIndex((current) => current + 1)
-  //         setFeedback("")
-  //         setLine(null)
-  //       }
-  //     }, 1000)
-  //   } else {
-  //     setLine({
-  //       x1: start.x,
-  //       y1: start.y,
-  //       x2: end.x,
-  //       y2: end.y,
-  //       correct: false,
-  //     })
-
-  //     setFeedback("Belum tepat, coba lagi ya! 💪")
-
-  //     setTimeout(() => {
-  //       setLine(null)
-  //       setFeedback("")
-  //     }, 700)
-  //   }
-  // }
+      setFeedback("")
+      setLine(null)
+    }, 1000)
+  }
 
   // =====================================
   // RESET GAME
@@ -469,342 +400,360 @@ const handleDragEnd = (
   // =====================================
 
   return (
-    <div className="min-h-screen bg-sky-100 p-4 md:p-6">
+    <div className="relative min-h-screen overflow-hidden">
 
-      <div className="max-w-5xl mx-auto">
+      {/* BACKGROUND GAMBAR BLUR TIPIS */}
 
-        {/* JUDUL */}
+      <div
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat scale-105 blur-[1px]"
+        style={{
+          backgroundImage:
+            "url('/images/background2.png')",
+        }}
+      />
 
-        <div className="text-center mb-6">
+      {/* LAPISAN PUTIH TRANSPARAN */}
 
-          <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
-            🔷 Cocokkan Bentuk Geometri
-          </h1>
+      <div className="fixed inset-0 bg-white/30" />
 
-          <p className="text-lg text-gray-600 mt-2">
-            Tarik garis gambar ke bentuk yang sesuai!
-          </p>
+      {/* KONTEN GAME */}
 
-        </div>
+      <div className="relative z-10 min-h-screen p-4 md:p-6">
 
-        {/* INFORMASI GAME */}
+        <div className="max-w-5xl mx-auto">
 
-        <div className="flex justify-center gap-3 mb-6">
+          {/* JUDUL */}
 
-          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
-            <p className="text-sm text-gray-500">SOAL</p>
+          <div className="text-center mb-6">
 
-            <p className="text-2xl font-bold text-blue-600">
-              {questionIndex + (finished ? 0 : 1)}/10
+            <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
+              🔷 Cocokkan Bentuk Geometri
+            </h1>
+
+            <p className="text-lg text-gray-600 mt-2">
+              Tarik garis gambar ke bentuk yang sesuai!
             </p>
+
           </div>
 
-          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
-            <p className="text-sm text-gray-500">SKOR</p>
+          {/* INFORMASI GAME */}
 
-            <p className="text-2xl font-bold text-green-500">
-              {score}
-            </p>
+          <div className="flex justify-center gap-3 mb-6">
+
+            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+              <p className="text-sm text-gray-500">SOAL</p>
+
+              <p className="text-2xl font-bold text-blue-600">
+                {questionIndex + (finished ? 0 : 1)}/10
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+              <p className="text-sm text-gray-500">SKOR</p>
+
+              <p className="text-2xl font-bold text-green-500">
+                {score}
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+              <p className="text-sm text-gray-500">WAKTU</p>
+
+              <p className="text-2xl font-bold text-orange-500">
+                {formatTime(seconds)}
+              </p>
+            </div>
+
           </div>
 
-          <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
-            <p className="text-sm text-gray-500">WAKTU</p>
+          {/* PROGRESS */}
 
-            <p className="text-2xl font-bold text-orange-500">
-              {formatTime(seconds)}
-            </p>
+          <div className="bg-white rounded-full h-4 overflow-hidden mb-6 shadow">
+            <div
+              className="bg-green-400 h-full transition-all duration-500"
+              style={{
+                width: `${(score / 100) * 100}%`,
+              }}
+            />
           </div>
 
-        </div>
+          {/* PAPAN PERMAINAN */}
 
-        {/* PROGRESS */}
+          {!finished && (
 
-        <div className="bg-white rounded-full h-4 overflow-hidden mb-6 shadow">
-          <div
-            className="bg-green-400 h-full transition-all duration-500"
-            style={{
-              width: `${(score / 100) * 100}%`,
-            }}
-          />
-        </div>
-
-        {/* PAPAN PERMAINAN */}
-
-        {!finished && (
-
-          <div
-            ref={boardRef}
-            onPointerMove={handleDragMove}
-            className="
-              relative
-              bg-white
-              rounded-3xl
-              shadow-xl
-              p-4
-              md:p-8
-              min-h-[430px]
-              overflow-hidden
-              select-none
-            "
-          >
-
-            {/* SVG GARIS */}
-
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none z-20"
-              style={{ overflow: "visible" }}
+            <div
+              ref={boardRef}
+              onPointerMove={handleDragMove}
+              className="
+                relative
+                bg-white
+                rounded-3xl
+                shadow-xl
+                p-4
+                md:p-8
+                min-h-[430px]
+                overflow-hidden
+                select-none
+              "
             >
-              {line && (
-                <line
-                  x1={line.x1}
-                  y1={line.y1}
-                  x2={line.x2}
-                  y2={line.y2}
-                  stroke={
-                    line.correct
-                      ? "#22C55E"
-                      : dragging
-                      ? "#3B82F6"
-                      : "#EF4444"
-                  }
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray="10 7"
-                />
-              )}
-            </svg>
 
-            <div className="grid grid-cols-2 gap-4 md:gap-10 relative z-10">
+              {/* SVG GARIS */}
 
-              {/* KOLOM GAMBAR */}
-
-              <div className="flex flex-col items-center">
-
-                <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
-                  🖼️ GAMBAR
-                </h2>
-
-                <div
-                  ref={imageRef}
-                  onPointerDown={handleDragStart}
-                  className="
-                    w-full
-                    max-w-[220px]
-                    aspect-square
-                    bg-yellow-50
-                    border-4
-                    border-yellow-300
-                    rounded-3xl
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                    p-3
-                    cursor-grab
-                    active:cursor-grabbing
-                    touch-none
-                    hover:scale-105
-                    transition
-                  "
-                >
-
-                  <img
-                    src={question.image}
-                    alt={question.name}
-                    draggable={false}
-                    className="w-full h-4/5 object-contain pointer-events-none"
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none z-20"
+                style={{ overflow: "visible" }}
+              >
+                {line && (
+                  <line
+                    x1={line.x1}
+                    y1={line.y1}
+                    x2={line.x2}
+                    y2={line.y2}
+                    stroke={
+                      line.correct
+                        ? "#22C55E"
+                        : dragging
+                        ? "#3B82F6"
+                        : "#EF4444"
+                    }
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    strokeDasharray="10 7"
                   />
+                )}
+              </svg>
 
-                  <p className="font-bold text-gray-700 text-lg">
-                    {question.name}
+              <div className="grid grid-cols-2 gap-4 md:gap-10 relative z-10">
+
+                {/* KOLOM GAMBAR */}
+
+                <div className="flex flex-col items-center">
+
+                  <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
+                    🖼️ GAMBAR
+                  </h2>
+
+                  <div
+                    ref={imageRef}
+                    onPointerDown={handleDragStart}
+                    className="
+                      w-full
+                      max-w-[220px]
+                      aspect-square
+                      bg-yellow-50
+                      border-4
+                      border-yellow-300
+                      rounded-3xl
+                      flex
+                      flex-col
+                      items-center
+                      justify-center
+                      p-3
+                      cursor-grab
+                      active:cursor-grabbing
+                      touch-none
+                      hover:scale-105
+                      transition
+                    "
+                  >
+
+                    <img
+                      src={question.image}
+                      alt={question.name}
+                      draggable={false}
+                      className="w-full h-4/5 object-contain pointer-events-none"
+                    />
+
+                    <p className="font-bold text-gray-700 text-lg">
+                      {question.name}
+                    </p>
+
+                  </div>
+
+                  <p className="text-sm text-gray-500 mt-4 text-center">
+                    👆 Tarik garis dari sini
                   </p>
 
                 </div>
 
-                <p className="text-sm text-gray-500 mt-4 text-center">
-                  👆 Tarik garis dari sini
-                </p>
+                {/* KOLOM BENTUK */}
 
-              </div>
+                <div className="flex flex-col items-center">
 
-              {/* KOLOM BENTUK */}
+                  <h2 className="text-lg md:text-2xl font-bold text-purple-600 mb-5">
+                    🔷 BENTUK
+                  </h2>
 
-              <div className="flex flex-col items-center">
+                  <div className="w-full max-w-[220px] flex flex-col gap-3">
 
-                <h2 className="text-lg md:text-2xl font-bold text-purple-600 mb-5">
-                  🔷 BENTUK
-                </h2>
+                    {question.options.map((shape) => (
 
-                <div className="w-full max-w-[220px] flex flex-col gap-3">
+                      <button
+                        key={shape}
+                        ref={(element) => {
+                          optionRefs.current[shape] = element
+                        }}
+                        onPointerUp={(e) =>
+                          handleDragEnd(e, shape)
+                        }
+                        className="
+                          w-full
+                          h-28
+                          md:h-32
+                          bg-purple-50
+                          border-4
+                          border-purple-200
+                          rounded-2xl
+                          flex
+                          flex-col
+                          items-center
+                          justify-center
+                          hover:bg-purple-100
+                          active:bg-green-100
+                          transition
+                          touch-none
+                        "
+                      >
 
-                  {question.options.map((shape) => (
+                        <ShapeImage shape={shape} />
 
-                    <button
-                      key={shape}
-                      ref={(element) => {
-                        optionRefs.current[shape] = element
-                      }}
-                      onPointerUp={(e) =>
-                        handleDragEnd(e, shape)
-                      }
-                      className="
-                        w-full
-                        h-28
-                        md:h-32
-                        bg-purple-50
-                        border-4
-                        border-purple-200
-                        rounded-2xl
-                        flex
-                        flex-col
-                        items-center
-                        justify-center
-                        hover:bg-purple-100
-                        active:bg-green-100
-                        transition
-                        touch-none
-                      "
-                    >
+                        <span className="font-bold text-gray-600 text-sm">
+                          {shapeNames[shape]}
+                        </span>
 
-                      <ShapeImage shape={shape} />
+                      </button>
 
-                      <span className="font-bold text-gray-600 text-sm">
-                        {shapeNames[shape]}
-                      </span>
+                    ))}
 
-                    </button>
-
-                  ))}
+                  </div>
 
                 </div>
 
               </div>
 
-            </div>
+              {/* FEEDBACK */}
 
-            {/* FEEDBACK */}
-
-            {feedback && (
-              <div className={`
-                mt-5
-                text-center
-                font-bold
-                text-xl
-                p-3
-                rounded-2xl
-                ${
-                  feedback.includes("Benar")
-                    ? "bg-green-100 text-green-600"
-                    : "bg-orange-100 text-orange-600"
-                }
-              `}>
-                {feedback}
-              </div>
-            )}
-
-          </div>
-        )}
-
-        {/* HALAMAN MULAI */}
-
-        {!started && !finished && (
-          <div className="bg-white rounded-3xl p-7 text-center shadow-xl mt-6">
-
-            <div className="text-6xl mb-3">🎮</div>
-
-            <h2 className="text-2xl font-bold text-blue-600">
-              Siap Bermain?
-            </h2>
-
-            <p className="text-gray-600 mt-2">
-              Ada 10 gambar yang harus dicocokkan.
-              Tarik garis menuju bentuk yang benar!
-            </p>
-
-            <button
-              onClick={() => setStarted(true)}
-              className="
-                mt-6
-                bg-green-500
-                hover:bg-green-600
-                text-white
-                text-xl
-                font-bold
-                px-10
-                py-4
-                rounded-full
-                shadow-lg
-                active:scale-95
-              "
-            >
-              🚀 MULAI BERMAIN
-            </button>
-
-          </div>
-        )}
-
-        {/* HASIL AKHIR */}
-
-        {finished && (
-
-          <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
-
-            <div className="text-7xl">🏆</div>
-
-            <h2 className="text-4xl font-bold text-green-500 mt-3">
-              LUAR BIASA!
-            </h2>
-
-            <p className="text-lg text-gray-600 mt-2">
-              Kamu berhasil menyelesaikan 10 soal!
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 mt-7">
-
-              <div className="bg-yellow-50 p-5 rounded-2xl">
-                <p className="text-gray-500">SKOR AKHIR</p>
-                <p className="text-4xl font-bold text-orange-500">
-                  {score}
-                </p>
-              </div>
-
-              <div className="bg-blue-50 p-5 rounded-2xl">
-                <p className="text-gray-500">WAKTU</p>
-                <p className="text-4xl font-bold text-blue-500">
-                  {formatTime(seconds)}
-                </p>
-              </div>
+              {feedback && (
+                <div className={`
+                  mt-5
+                  text-center
+                  font-bold
+                  text-xl
+                  p-3
+                  rounded-2xl
+                  ${
+                    feedback.includes("Benar")
+                      ? "bg-green-100 text-green-600"
+                      : "bg-orange-100 text-orange-600"
+                  }
+                `}>
+                  {feedback}
+                </div>
+              )}
 
             </div>
+          )}
 
-            <button
-              onClick={restartGame}
-              className="
-                mt-8
-                bg-blue-500
-                hover:bg-blue-600
-                text-white
-                px-10
-                py-4
-                rounded-full
-                text-xl
-                font-bold
-              "
-            >
-              🔄 MAIN LAGI
-            </button>
+          {/* HALAMAN MULAI */}
 
+          {!started && !finished && (
+            <div className="bg-white rounded-3xl p-7 text-center shadow-xl mt-6">
+
+              <div className="text-6xl mb-3">🎮</div>
+
+              <h2 className="text-2xl font-bold text-blue-600">
+                Siap Bermain?
+              </h2>
+
+              <p className="text-gray-600 mt-2">
+                Ada 10 gambar yang harus dicocokkan.
+                Tarik garis menuju bentuk yang benar!
+              </p>
+
+              <button
+                onClick={() => setStarted(true)}
+                className="
+                  mt-6
+                  bg-green-500
+                  hover:bg-green-600
+                  text-white
+                  text-xl
+                  font-bold
+                  px-10
+                  py-4
+                  rounded-full
+                  shadow-lg
+                  active:scale-95
+                "
+              >
+                🚀 MULAI BERMAIN
+              </button>
+
+            </div>
+          )}
+
+          {/* HASIL AKHIR */}
+
+          {finished && (
+
+            <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+
+              <div className="text-7xl">🏆</div>
+
+              <h2 className="text-4xl font-bold text-green-500 mt-3">
+                LUAR BIASA!
+              </h2>
+
+              <p className="text-lg text-gray-600 mt-2">
+                Kamu berhasil menyelesaikan 10 soal!
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 mt-7">
+
+                <div className="bg-yellow-50 p-5 rounded-2xl">
+                  <p className="text-gray-500">SKOR AKHIR</p>
+                  <p className="text-4xl font-bold text-orange-500">
+                    {score}
+                  </p>
+                </div>
+
+                <div className="bg-blue-50 p-5 rounded-2xl">
+                  <p className="text-gray-500">WAKTU</p>
+                  <p className="text-4xl font-bold text-blue-500">
+                    {formatTime(seconds)}
+                  </p>
+                </div>
+
+              </div>
+
+              <button
+                onClick={restartGame}
+                className="
+                  mt-8
+                  bg-blue-500
+                  hover:bg-blue-600
+                  text-white
+                  px-10
+                  py-4
+                  rounded-full
+                  text-xl
+                  font-bold
+                "
+              >
+                🔄 MAIN LAGI
+              </button>
+
+            </div>
+          )}
+
+          {/* PETUNJUK */}
+
+          <div className="text-center text-gray-500 text-sm mt-6">
+            🌈 Belajar bentuk geometri sambil bermain!
           </div>
-        )}
 
-        {/* PETUNJUK */}
-
-        <div className="text-center text-gray-500 text-sm mt-6">
-          🌈 Belajar bentuk geometri sambil bermain!
         </div>
-
       </div>
-
     </div>
   )
 }
