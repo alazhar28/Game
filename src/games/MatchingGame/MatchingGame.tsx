@@ -338,57 +338,6 @@ function MatchingGame() {
   // SELESAI MENARIK GARIS
   // =====================================
 
-  
-const handleDragEnd = (
-  e: React.PointerEvent<HTMLButtonElement>,
-  shape: Shape
-) => {
-  if (!dragging || !started || finished) return
-
-  e.preventDefault()
-
-  const image = imageRef.current
-  const option = optionRefs.current[shape]
-
-  if (!image || !option) return
-
-  const start = getCenter(image)
-  const end = getCenter(option)
-
-  if (!start || !end) return
-
-  setDragging(false)
-
-  const isCorrect = shape === question.answer
-
-  setLine({
-    x1: start.x,
-    y1: start.y,
-    x2: end.x,
-    y2: end.y,
-    correct: isCorrect,
-  })
-
-  if (isCorrect) {
-    setScore((current) => current + 10)
-    setFeedback("Hebat! Jawaban Benar! 🎉")
-  } else {
-    setFeedback("Tidak apa-apa, ayo lanjut! 😊")
-  }
-
-  // BENAR ATAU SALAH TETAP LANJUT
-  setTimeout(() => {
-    if (questionIndex + 1 >= questions.length) {
-      setFinished(true)
-    } else {
-      setQuestionIndex((current) => current + 1)
-    }
-
-    setFeedback("")
-    setLine(null)
-  }, 1000)
-}
-
   // const handleDragEnd = (
   //   e: React.PointerEvent<HTMLButtonElement>,
   //   shape: Shape
@@ -574,54 +523,113 @@ const handleDragEnd = (
               )}
             </svg>
 
-            <div className="flex flex-col items-center">
+            <div className="grid grid-cols-2 gap-4 md:gap-10 relative z-10">
 
-  <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
-    🖼️ GAMBAR
-  </h2>
+              {/* KOLOM GAMBAR */}
 
-  <div
-    ref={imageRef}
-    onPointerDown={handleDragStart}
-    className="
-      w-full
-      max-w-[320px]
-      aspect-square
-      bg-yellow-50
-      border-4
-      border-yellow-300
-      rounded-3xl
-      flex
-      flex-col
-      items-center
-      justify-center
-      p-3
-      cursor-grab
-      active:cursor-grabbing
-      touch-none
-      hover:scale-105
-      transition
-    "
-  >
+              <div className="flex flex-col items-center">
 
-    <img
-      src={question.image}
-      alt={question.name}
-      draggable={false}
-      className="w-full h-[85%] object-contain pointer-events-none"
-    />
+                <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
+                  🖼️ GAMBAR
+                </h2>
 
-    <p className="font-bold text-gray-700 text-xl md:text-2xl">
-      {question.name}
-    </p>
+                <div
+                  ref={imageRef}
+                  onPointerDown={handleDragStart}
+                  className="
+                    w-full
+                    max-w-[220px]
+                    aspect-square
+                    bg-yellow-50
+                    border-4
+                    border-yellow-300
+                    rounded-3xl
+                    flex
+                    flex-col
+                    items-center
+                    justify-center
+                    p-3
+                    cursor-grab
+                    active:cursor-grabbing
+                    touch-none
+                    hover:scale-105
+                    transition
+                  "
+                >
 
-  </div>
+                  <img
+                    src={question.image}
+                    alt={question.name}
+                    draggable={false}
+                    className="w-full h-4/5 object-contain pointer-events-none"
+                  />
 
-  <p className="text-sm text-gray-500 mt-4 text-center">
-    👆 Tarik garis dari sini
-  </p>
+                  <p className="font-bold text-gray-700 text-lg">
+                    {question.name}
+                  </p>
 
-</div>
+                </div>
+
+                <p className="text-sm text-gray-500 mt-4 text-center">
+                  👆 Tarik garis dari sini
+                </p>
+
+              </div>
+
+              {/* KOLOM BENTUK */}
+
+              <div className="flex flex-col items-center">
+
+                <h2 className="text-lg md:text-2xl font-bold text-purple-600 mb-5">
+                  🔷 BENTUK
+                </h2>
+
+                <div className="w-full max-w-[220px] flex flex-col gap-3">
+
+                  {question.options.map((shape) => (
+
+                    <button
+                      key={shape}
+                      ref={(element) => {
+                        optionRefs.current[shape] = element
+                      }}
+                      onPointerUp={(e) =>
+                        handleDragEnd(e, shape)
+                      }
+                      className="
+                        w-full
+                        h-28
+                        md:h-32
+                        bg-purple-50
+                        border-4
+                        border-purple-200
+                        rounded-2xl
+                        flex
+                        flex-col
+                        items-center
+                        justify-center
+                        hover:bg-purple-100
+                        active:bg-green-100
+                        transition
+                        touch-none
+                      "
+                    >
+
+                      <ShapeImage shape={shape} />
+
+                      <span className="font-bold text-gray-600 text-sm">
+                        {shapeNames[shape]}
+                      </span>
+
+                    </button>
+
+                  ))}
+
+                </div>
+
+              </div>
+
+            </div>
 
             {/* FEEDBACK */}
 
