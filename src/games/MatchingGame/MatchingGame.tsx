@@ -32,7 +32,7 @@ const questions: Question[] = [
   },
   {
     id: 2,
-    name: "Jam",
+    name: "Roda",
     image: "/images/geometri/jam.png",
     answer: "circle",
     options: ["square", "circle", "rectangle"],
