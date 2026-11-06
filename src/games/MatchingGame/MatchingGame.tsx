@@ -73,10 +73,10 @@ const questions: Question[] = [
   },
   {
     id: 8,
-    name: "Roda",
+    name: "tv",
     image: "/images/geometri/roda.png",
-    answer: "circle",
-    options: ["rectangle", "star", "circle"],
+    answer: "rectangle",
+    options: ["rectangle", "star", "square"],
   },
   {
     id: 9,
@@ -87,9 +87,9 @@ const questions: Question[] = [
   },
   {
     id: 10,
-    name: "Bantal",
+    name: "donat",
     image: "/images/geometri/bantal.png",
-    answer: "oval",
+    answer: "circle",
     options: ["star", "oval", "circle"],
   },
 ]
