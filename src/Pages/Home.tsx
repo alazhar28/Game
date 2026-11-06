@@ -7,9 +7,9 @@ function Home() {
 
       {/* BACKGROUND GAMBAR BLUR */}
       <div
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat scale-110 blur-md"
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat scale-110 blur-[1px]"
         style={{
-          backgroundImage: "url('/images/background.png')",
+          backgroundImage: "url('/images/background2.png')",
         }}
       />
 
