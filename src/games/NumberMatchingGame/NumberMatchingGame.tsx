@@ -469,7 +469,7 @@ function NumberMatchingGame() {
                 text-2xl
                 md:text-3xl
                 font-bold
-                text-green-600
+                text-blue-950
                 text-center
                 mb-6
               "
@@ -499,7 +499,7 @@ function NumberMatchingGame() {
                       md:h-24
                       bg-green-50
                       border-4
-                      border-green-300
+                      border-blue-400
                       rounded-3xl
                       shadow-md
                       flex
@@ -508,7 +508,7 @@ function NumberMatchingGame() {
                       text-5xl
                       md:text-6xl
                       font-bold
-                      text-green-700
+                      text-blue-950
                       hover:bg-green-100
                       active:scale-95
                       transition
@@ -527,7 +527,7 @@ function NumberMatchingGame() {
                         -translate-y-1/2
                         w-6
                         h-6
-                        bg-green-500
+                        bg-blue-950
                         border-4
                         border-white
                         rounded-full
@@ -680,7 +680,7 @@ function NumberMatchingGame() {
               />
             </div>
 
-            <p
+            {/* <p
               className="
                 text-center
                 text-lg
@@ -691,7 +691,7 @@ function NumberMatchingGame() {
               👆 Hitung jumlah gambar,
               lalu tarik dari titik ke
               angka yang sesuai
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
@@ -746,7 +746,7 @@ function NumberMatchingGame() {
         className="
           text-4xl
           font-bold
-          text-green-500
+          text-blue-950
           mt-3
         "
       >
@@ -891,7 +891,7 @@ function NumberMatchingGame() {
               className="
                 text-4xl
                 font-bold
-                text-green-500
+                text-blue-800
                 mt-3
               "
             >
