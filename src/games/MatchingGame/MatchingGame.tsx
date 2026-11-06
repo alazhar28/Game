@@ -338,65 +338,116 @@ function MatchingGame() {
   // SELESAI MENARIK GARIS
   // =====================================
 
-  const handleDragEnd = (
-    e: React.PointerEvent<HTMLButtonElement>,
-    shape: Shape
-  ) => {
-    if (!dragging || !started || finished) return
+  
+const handleDragEnd = (
+  e: React.PointerEvent<HTMLButtonElement>,
+  shape: Shape
+) => {
+  if (!dragging || !started || finished) return
 
-    e.preventDefault()
+  e.preventDefault()
 
-    const image = imageRef.current
-    const option = optionRefs.current[shape]
+  const image = imageRef.current
+  const option = optionRefs.current[shape]
 
-    if (!image || !option) return
+  if (!image || !option) return
 
-    const start = getCenter(image)
-    const end = getCenter(option)
+  const start = getCenter(image)
+  const end = getCenter(option)
 
-    if (!start || !end) return
+  if (!start || !end) return
 
-    setDragging(false)
+  setDragging(false)
 
-    if (shape === question.answer) {
-      setLine({
-        x1: start.x,
-        y1: start.y,
-        x2: end.x,
-        y2: end.y,
-        correct: true,
-      })
+  const isCorrect = shape === question.answer
 
-      setFeedback("Hebat! Jawaban Benar! 🎉")
+  setLine({
+    x1: start.x,
+    y1: start.y,
+    x2: end.x,
+    y2: end.y,
+    correct: isCorrect,
+  })
 
-      setScore((current) => current + 10)
-
-      setTimeout(() => {
-        if (questionIndex + 1 >= questions.length) {
-          setFinished(true)
-        } else {
-          setQuestionIndex((current) => current + 1)
-          setFeedback("")
-          setLine(null)
-        }
-      }, 1000)
-    } else {
-      setLine({
-        x1: start.x,
-        y1: start.y,
-        x2: end.x,
-        y2: end.y,
-        correct: false,
-      })
-
-      setFeedback("Belum tepat, coba lagi ya! 💪")
-
-      setTimeout(() => {
-        setLine(null)
-        setFeedback("")
-      }, 700)
-    }
+  if (isCorrect) {
+    setScore((current) => current + 10)
+    setFeedback("Hebat! Jawaban Benar! 🎉")
+  } else {
+    setFeedback("Tidak apa-apa, ayo lanjut! 😊")
   }
+
+  // BENAR ATAU SALAH TETAP LANJUT
+  setTimeout(() => {
+    if (questionIndex + 1 >= questions.length) {
+      setFinished(true)
+    } else {
+      setQuestionIndex((current) => current + 1)
+    }
+
+    setFeedback("")
+    setLine(null)
+  }, 1000)
+}
+
+  // const handleDragEnd = (
+  //   e: React.PointerEvent<HTMLButtonElement>,
+  //   shape: Shape
+  // ) => {
+  //   if (!dragging || !started || finished) return
+
+  //   e.preventDefault()
+
+  //   const image = imageRef.current
+  //   const option = optionRefs.current[shape]
+
+  //   if (!image || !option) return
+
+  //   const start = getCenter(image)
+  //   const end = getCenter(option)
+
+  //   if (!start || !end) return
+
+  //   setDragging(false)
+
+  //   if (shape === question.answer) {
+  //     setLine({
+  //       x1: start.x,
+  //       y1: start.y,
+  //       x2: end.x,
+  //       y2: end.y,
+  //       correct: true,
+  //     })
+
+  //     setFeedback("Hebat! Jawaban Benar! 🎉")
+
+  //     setScore((current) => current + 10)
+
+  //     setTimeout(() => {
+  //       if (questionIndex + 1 >= questions.length) {
+  //         setFinished(true)
+  //       } else {
+  //         setQuestionIndex((current) => current + 1)
+  //         setFeedback("")
+  //         setLine(null)
+  //       }
+  //     }, 1000)
+  //   } else {
+  //     setLine({
+  //       x1: start.x,
+  //       y1: start.y,
+  //       x2: end.x,
+  //       y2: end.y,
+  //       correct: false,
+  //     })
+
+  //     setFeedback("Belum tepat, coba lagi ya! 💪")
+
+  //     setTimeout(() => {
+  //       setLine(null)
+  //       setFeedback("")
+  //     }, 700)
+  //   }
+  // }
 
   // =====================================
   // RESET GAME
