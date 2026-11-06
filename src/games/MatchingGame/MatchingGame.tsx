@@ -574,113 +574,54 @@ const handleDragEnd = (
               )}
             </svg>
 
-            <div className="grid grid-cols-2 gap-4 md:gap-10 relative z-10">
+            <div className="flex flex-col items-center">
 
-              {/* KOLOM GAMBAR */}
+  <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
+    🖼️ GAMBAR
+  </h2>
 
-              <div className="flex flex-col items-center">
+  <div
+    ref={imageRef}
+    onPointerDown={handleDragStart}
+    className="
+      w-full
+      max-w-[320px]
+      aspect-square
+      bg-yellow-50
+      border-4
+      border-yellow-300
+      rounded-3xl
+      flex
+      flex-col
+      items-center
+      justify-center
+      p-3
+      cursor-grab
+      active:cursor-grabbing
+      touch-none
+      hover:scale-105
+      transition
+    "
+  >
 
-                <h2 className="text-lg md:text-2xl font-bold text-blue-600 mb-5">
-                  🖼️ GAMBAR
-                </h2>
+    <img
+      src={question.image}
+      alt={question.name}
+      draggable={false}
+      className="w-full h-[85%] object-contain pointer-events-none"
+    />
 
-                <div
-                  ref={imageRef}
-                  onPointerDown={handleDragStart}
-                  className="
-                    w-full
-                    max-w-[220px]
-                    aspect-square
-                    bg-yellow-50
-                    border-4
-                    border-yellow-300
-                    rounded-3xl
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                    p-3
-                    cursor-grab
-                    active:cursor-grabbing
-                    touch-none
-                    hover:scale-105
-                    transition
-                  "
-                >
+    <p className="font-bold text-gray-700 text-xl md:text-2xl">
+      {question.name}
+    </p>
 
-                  <img
-                    src={question.image}
-                    alt={question.name}
-                    draggable={false}
-                    className="w-full h-4/5 object-contain pointer-events-none"
-                  />
+  </div>
 
-                  <p className="font-bold text-gray-700 text-lg">
-                    {question.name}
-                  </p>
+  <p className="text-sm text-gray-500 mt-4 text-center">
+    👆 Tarik garis dari sini
+  </p>
 
-                </div>
-
-                <p className="text-sm text-gray-500 mt-4 text-center">
-                  👆 Tarik garis dari sini
-                </p>
-
-              </div>
-
-              {/* KOLOM BENTUK */}
-
-              <div className="flex flex-col items-center">
-
-                <h2 className="text-lg md:text-2xl font-bold text-purple-600 mb-5">
-                  🔷 BENTUK
-                </h2>
-
-                <div className="w-full max-w-[220px] flex flex-col gap-3">
-
-                  {question.options.map((shape) => (
-
-                    <button
-                      key={shape}
-                      ref={(element) => {
-                        optionRefs.current[shape] = element
-                      }}
-                      onPointerUp={(e) =>
-                        handleDragEnd(e, shape)
-                      }
-                      className="
-                        w-full
-                        h-28
-                        md:h-32
-                        bg-purple-50
-                        border-4
-                        border-purple-200
-                        rounded-2xl
-                        flex
-                        flex-col
-                        items-center
-                        justify-center
-                        hover:bg-purple-100
-                        active:bg-green-100
-                        transition
-                        touch-none
-                      "
-                    >
-
-                      <ShapeImage shape={shape} />
-
-                      <span className="font-bold text-gray-600 text-sm">
-                        {shapeNames[shape]}
-                      </span>
-
-                    </button>
-
-                  ))}
-
-                </div>
-
-              </div>
-
-            </div>
+</div>
 
             {/* FEEDBACK */}
 
