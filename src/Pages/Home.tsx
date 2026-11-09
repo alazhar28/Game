@@ -124,9 +124,9 @@ function Home() {
               </h2>
             </Link>
 
-            {/* PUZZLE */}
+            {/* VOCAL GAME */}
             <Link
-              to="/game/puzzle"
+              to="/game/vocal"
               className="
                 bg-white/90
                 rounded-3xl
@@ -139,7 +139,7 @@ function Home() {
             >
               <div className="text-6xl">🧠</div>
               <h2 className="text-xl font-bold mt-4">
-                Puzzle
+                Melengkapi Huruf
               </h2>
             </Link>
 

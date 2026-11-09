@@ -4,8 +4,9 @@ import Home from "./Pages/Home"
 import ColoringGame from "./games/ColoringGame/ColoringGame"
 import NumberGame from "./games/NumberGame/NumberGame"
 import MatchingGame from "./games/MatchingGame/MatchingGame"
-import PuzzleGame from "./games/PuzzelGame/PuzzelGame"
+import PuzzleGame from "./games/VocalGame/VocalGame"
 import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
+import VokalGame from "./games/VocalGame/VocalGame"
 
 function App() {
   return (
@@ -39,8 +40,8 @@ function App() {
         />
 
         <Route
-          path="/game/puzzle"
-          element={<PuzzleGame />}
+          path="/game/vocal"
+          element={<VokalGame />}
         />
 
       </Routes>
