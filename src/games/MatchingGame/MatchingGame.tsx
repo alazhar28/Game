@@ -92,6 +92,42 @@ const questions: Question[] = [
     answer: "circle",
     options: ["star", "oval", "circle"],
   },
+  
+  {
+    id:11,
+    name: "Bintang",
+    image: "/images/geometri/bintang2.png",
+    answer: "star",
+    options: ["circle", "star", "rectangle"],
+  },
+  {
+    id: 12,
+    name: "Onigiri",
+    image: "/images/geometri/onigiri.png",
+    answer: "triangle",
+    options: ["triangle", "square", "oval"],
+  },
+  {
+    id: 13,
+    name: "Jam",
+    image: "/images/geometri/jam.png",
+    answer: "circle",
+    options: ["rectangle", "circle", "square"],
+  },
+  {
+    id: 14,
+    name: "Bantal",
+    image: "/images/geometri/bantal.png",
+    answer: "rectangle",
+    options: ["star", "rectangle", "triangle"],
+  },
+  {
+    id: 15,
+    name: "Penggorengan",
+    image: "/images/geometri/penggorengan.png",
+    answer: "circle",
+    options: ["star", "oval", "circle"],
+  },
 ]
 
 // =====================================
@@ -200,12 +236,9 @@ function ShapeImage({ shape }: { shape: Shape }) {
   )
 }
 
-// =====================================
-// GAME UTAMA
-// =====================================
-
 function MatchingGame() {
   const [questionIndex, setQuestionIndex] = useState(0)
+  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([])
   const [score, setScore] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [started, setStarted] = useState(false)
@@ -228,7 +261,24 @@ function MatchingGame() {
     Record<string, HTMLButtonElement | null>
   >({})
 
-  const question = questions[questionIndex]
+  const question = shuffledQuestions[questionIndex]
+
+  // =====================================
+  // ACAK 15 SOAL TANPA PERULANGAN
+  // =====================================
+
+  const shuffleQuestions = () => {
+    const shuffled = [...questions]
+
+    // Fisher-Yates Shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+
+    setShuffledQuestions(shuffled)
+  }
 
   // =====================================
   // TIMER
@@ -239,7 +289,7 @@ function MatchingGame() {
 
     const timer = setInterval(() => {
       setSeconds((current) => current + 1)
-    }, 1000)
+    }, 1500)
 
     return () => clearInterval(timer)
   }, [started, finished])
@@ -341,7 +391,7 @@ function MatchingGame() {
     const image = imageRef.current
     const option = optionRefs.current[shape]
 
-    if (!image || !option) return
+    if (!image || !option || !question) return
 
     const start = getCenter(image)
     const end = getCenter(option)
@@ -361,15 +411,15 @@ function MatchingGame() {
     })
 
     if (isCorrect) {
-      setScore((current) => current + 10)
-      setFeedback("Hebat! Jawaban Benar! 🎉")
-    } else {
-      setFeedback("Tidak apa-apa, ayo lanjut! 😊")
-    }
+  setScore((current) => current + (100 / 15))
+  setFeedback("benar")
+} else {
+  setFeedback("salah")
+}
 
     // BENAR ATAU SALAH TETAP LANJUT
     setTimeout(() => {
-      if (questionIndex + 1 >= questions.length) {
+      if (questionIndex + 1 >= shuffledQuestions.length) {
         setFinished(true)
       } else {
         setQuestionIndex((current) => current + 1)
@@ -377,7 +427,7 @@ function MatchingGame() {
 
       setFeedback("")
       setLine(null)
-    }, 1000)
+    }, 1500)
   }
 
   // =====================================
@@ -393,6 +443,23 @@ function MatchingGame() {
     setDragging(false)
     setFeedback("")
     setLine(null)
+    setShuffledQuestions([])
+  }
+
+  // =====================================
+  // MULAI PERMAINAN
+  // =====================================
+
+  const startGame = () => {
+    shuffleQuestions()
+    setQuestionIndex(0)
+    setScore(0)
+    setSeconds(0)
+    setDragging(false)
+    setFeedback("")
+    setLine(null)
+    setFinished(false)
+    setStarted(true)
   }
 
   // =====================================
@@ -425,15 +492,6 @@ function MatchingGame() {
           {/* JUDUL */}
 
           <div className="text-center mb-6">
-
-            {/* <h1 className="text-3xl md:text-5xl font-bold text-blue-600">
-              🔷 Cocokkan Bentuk Geometri
-            </h1> */}
-{/* 
-            <p className="text-lg text-gray-600 mt-2">
-              Tarik garis gambar ke bentuk yang sesuai!
-            </p> */}
-
           </div>
 
           {/* INFORMASI GAME */}
@@ -444,15 +502,15 @@ function MatchingGame() {
               <p className="text-sm text-gray-500">SOAL</p>
 
               <p className="text-2xl font-bold text-blue-600">
-                {questionIndex + (finished ? 0 : 1)}/10
+                {questionIndex + (finished ? 0 : 1)}/15
               </p>
             </div>
 
             <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SKOR</p>
 
-              <p className="text-2xl font-bold text-green-500">
-                {score}
+              <p className="text-2xl font-bold text-blue-500">
+                {Math.round(score)}
               </p>
             </div>
 
@@ -466,20 +524,11 @@ function MatchingGame() {
 
           </div>
 
-          {/* PROGRESS */}
-
-          <div className="bg-white rounded-full h-4 overflow-hidden mb-6 shadow">
-            <div
-              className="bg-green-400 h-full transition-all duration-500"
-              style={{
-                width: `${(score / 100) * 100}%`,
-              }}
-            />
-          </div>
+          
 
           {/* PAPAN PERMAINAN */}
 
-          {!finished && (
+          {!finished && started && question && (
 
             <div
               ref={boardRef}
@@ -538,11 +587,10 @@ function MatchingGame() {
                     onPointerDown={handleDragStart}
                     className="
                       w-full
-                      max-w-[220px]
                       aspect-square
-                      bg-yellow-50
+                      bg-blue-50
                       border-4
-                      border-yellow-300
+                      border-blue-300
                       rounded-3xl
                       flex
                       flex-col
@@ -609,7 +657,7 @@ function MatchingGame() {
                           items-center
                           justify-center
                           hover:bg-purple-100
-                          active:bg-green-100
+                          active:bg-blue-100
                           transition
                           touch-none
                         "
@@ -631,25 +679,7 @@ function MatchingGame() {
 
               </div>
 
-              {/* FEEDBACK */}
 
-              {feedback && (
-                <div className={`
-                  mt-5
-                  text-center
-                  font-bold
-                  text-xl
-                  p-3
-                  rounded-2xl
-                  ${
-                    feedback.includes("Benar")
-                      ? "bg-green-100 text-green-600"
-                      : "bg-orange-100 text-orange-600"
-                  }
-                `}>
-                  {feedback}
-                </div>
-              )}
 
             </div>
           )}
@@ -665,29 +695,45 @@ function MatchingGame() {
                 Siap Bermain?
               </h2>
 
-              <p className="text-gray-600 mt-2">
-                Ada 10 gambar yang harus dicocokkan.
-                Tarik garis menuju bentuk yang benar!
-              </p>
 
-              <button
-                onClick={() => setStarted(true)}
-                className="
-                  mt-6
-                  bg-green-500
-                  hover:bg-green-600
-                  text-white
-                  text-xl
-                  font-bold
-                  px-10
-                  py-4
-                  rounded-full
-                  shadow-lg
-                  active:scale-95
-                "
-              >
-                🚀 MULAI BERMAIN
-              </button>
+              
+<button
+  onClick={startGame}
+  className="
+    mt-8
+    w-full
+    max-w-md
+    py-6
+    px-10
+    bg-gradient-to-r
+    from-blue-400
+    via-blue-500
+    to-blue-600
+    hover:from-blue-500
+    hover:to-blue-700
+    text-white
+    text-2xl
+    md:text-3xl
+    font-extrabold
+    rounded-full
+    shadow-[0_8px_0_#15803d,0_12px_20px_rgba(0,0,0,0.2)]
+    border-4
+    border-white
+    hover:scale-105
+    active:scale-95
+    active:shadow-none
+    transition-all
+    duration-200
+    animate-pulse
+  "
+>
+  <span className="inline-flex items-center justify-center gap-3">
+    <span className="text-4xl">🚀</span>
+    MULAI BERMAIN
+    <span className="text-3xl">⭐</span>
+  </span>
+</button>
+
 
             </div>
           )}
@@ -698,23 +744,20 @@ function MatchingGame() {
 
             <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
 
-              {/* <div className="text-7xl">🏆</div> */}
-
               <div className="flex justify-center">
-                <img 
-                src="/images/goodjob.png"
-                alt="Anak juara"
-                className="w-64 md:w-80 h-auto object-contain"
+                <img
+                  src="/images/goodjob.png"
+                  alt="Anak juara"
+                  className="w-64 md:w-80 h-auto object-contain"
                 />
-                </div>
+              </div>
 
-
-              <h2 className="text-4xl font-bold text-green-500 mt-3">
+              <h2 className="text-4xl font-bold text-blue-500 mt-3">
                 LUAR BIASA!
               </h2>
 
               <p className="text-lg text-gray-600 mt-2">
-                Kamu berhasil menyelesaikan 10 soal!
+                Kamu berhasil menyelesaikan 15 soal!
               </p>
 
               <div className="grid grid-cols-2 gap-4 mt-7">
@@ -755,6 +798,17 @@ function MatchingGame() {
             </div>
           )}
 
+          {/* PROGRESS */}
+
+          <div className="bg-white rounded-full h-4 overflow-hidden mb-6 mt-4 shadow">
+            <div
+              className="bg-blue-400 h-full transition-all duration-500"
+              style={{
+                width: `${((questionIndex + (finished ? 1 : 0)) / 15) * 100}%`,
+              }}
+            />
+          </div>
+
           {/* PETUNJUK */}
 
           <div className="text-center text-gray-500 text-sm mt-6">
@@ -763,6 +817,39 @@ function MatchingGame() {
 
         </div>
       </div>
+
+      {/* MODAL FEEDBACK */}
+{feedback && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div
+      className={`w-full max-w-sm rounded-3xl border-4 p-8 text-center shadow-2xl ${
+        feedback === "benar"
+          ? "border-blue-400 bg-blue-100"
+          : "border-red-400 bg-red-100"
+      }`}
+    >
+      {feedback === "benar" ? (
+        <>
+          <div className="text-8xl">✓</div>
+          <h2 className="mt-3 text-3xl font-bold text-blue-700">
+            Hebat!
+          </h2>
+          <div className="mt-3 text-4xl">⭐⭐⭐⭐⭐</div>
+          
+        </>
+      ) : (
+        <>
+          <div className="text-8xl font-bold text-red-500">✕</div>
+          <h2 className="mt-3 text-3xl font-bold text-red-700">
+            Belum Tepat!
+          </h2>
+          <div className="mt-3 text-5xl">😢</div>
+          
+        </>
+      )}
+    </div>
+  </div>
+)}
     </div>
   )
 }
