@@ -235,9 +235,6 @@ function VokalGame() {
                       }}
                     />
 
-                    <div className="text-6xl mt-2">
-                      {question.emoji}
-                    </div>
 
                     <p className="text-2xl font-extrabold text-blue-100 mt-2">
                       {question.name}
