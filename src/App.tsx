@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./Pages/Home"
 
-import ColoringGame from "./games/ColoringGame/ColoringGame"
 import NumberGame from "./games/NumberGame/NumberGame"
 import MatchingGame from "./games/MatchingGame/MatchingGame"
 import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
