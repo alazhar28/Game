@@ -475,7 +475,7 @@ function MatchingGame() {
         className="fixed inset-0 bg-cover bg-center bg-no-repeat scale-105 blur-[1px]"
         style={{
           backgroundImage:
-            "url('/images/background2.png')",
+            "url('/images/background.png')",
         }}
       />
 
@@ -498,7 +498,7 @@ function MatchingGame() {
 
           <div className="flex justify-center gap-3 mb-6">
 
-            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-6 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SOAL</p>
 
               <p className="text-2xl font-bold text-blue-600">
@@ -506,7 +506,7 @@ function MatchingGame() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-6 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SKOR</p>
 
               <p className="text-2xl font-bold text-blue-500">
@@ -514,7 +514,7 @@ function MatchingGame() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow px-6 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-6 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">WAKTU</p>
 
               <p className="text-2xl font-bold text-orange-500">
@@ -535,7 +535,7 @@ function MatchingGame() {
               onPointerMove={handleDragMove}
               className="
                 relative
-                bg-white
+                bg-white/40
                 rounded-3xl
                 shadow-xl
                 p-4
@@ -687,7 +687,7 @@ function MatchingGame() {
           {/* HALAMAN MULAI */}
 
           {!started && !finished && (
-            <div className="bg-white rounded-3xl p-7 text-center shadow-xl mt-6">
+            <div className="bg-white/30 rounded-3xl p-7 text-center shadow-xl mt-6">
 
               <div className="text-6xl mb-3">🎮</div>
 
@@ -800,7 +800,7 @@ function MatchingGame() {
 
           {/* PROGRESS */}
 
-          <div className="bg-white rounded-full h-4 overflow-hidden mb-6 mt-4 shadow">
+          <div className="bg-white/30 rounded-full h-4 overflow-hidden mb-6 mt-4 shadow">
             <div
               className="bg-blue-400 h-full transition-all duration-500"
               style={{
