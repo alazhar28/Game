@@ -107,7 +107,7 @@ function Home() {
 
             {/* MENCOCOKKAN GAMBAR */}
             <Link
-              to="/game/number-matching"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl
