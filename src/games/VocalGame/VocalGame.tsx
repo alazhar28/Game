@@ -149,9 +149,6 @@ function VokalGame() {
               🔤 Lengkapi Huruf yang Hilang!
             </h1>
 
-            <p className="text-gray-600 mt-3 text-lg">
-              Yuk, belajar huruf vokal sambil bermain! 🌈
-            </p>
           </div>
 
           {/* INFORMASI */}
@@ -193,10 +190,6 @@ function VokalGame() {
               <p className="text-gray-500 mt-3 text-lg">
                 Perhatikan gambar dan lengkapi huruf yang hilang!
               </p>
-
-              <div className="text-5xl mt-6">
-                🐄 📚 ⚽ 🎀
-              </div>
 
               <button
                 onClick={startGame}
