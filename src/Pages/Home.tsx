@@ -69,7 +69,7 @@ function Home() {
 
             {/* MEWARNAI */}
             <Link
-              to="/game/coloring"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl

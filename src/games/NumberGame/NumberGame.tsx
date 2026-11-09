@@ -1,13 +1,32 @@
+
 import { useState } from "react"
 
+
+const imageList = [
+  "/images/geometri/roda.png",
+  "/images/geometri/sapi.png",
+  "/images/geometri/buku.png",
+  "/images/geometri/bola.png",
+  "/images/geometri/meja.png",
+  "/images/geometri/topi.png",
+  "/images/geometri/kuda.png",
+  "/images/geometri/roti.png",
+  "/images/geometri/mata.png",
+  "/images/geometri/susu.png",
+  "/images/geometri/paku.png",
+  "/images/geometri/pita.png",
+  "/images/geometri/nasi.png",
+  "/images/geometri/kaca.png",
+  "/images/geometri/baju.png",
+]
 type Question = {
   id: number
   answer: number
   options: number[]
-  object: string
+  image: string
 }
 
-
+// MEMBUAT SOAL ACAK
 function createQuestion(id: number): Question {
   const answer = Math.floor(Math.random() * 6) + 1
 
@@ -25,11 +44,15 @@ function createQuestion(id: number): Question {
     shuffledWrong[1],
   ].sort(() => Math.random() - 0.5)
 
+  // PILIH GAMBAR ACAK DARI 15 GAMBAR
+  const randomImage =
+    imageList[Math.floor(Math.random() * imageList.length)]
+
   return {
     id,
     answer,
     options,
-    object: answer <= 3 ? "🌾" : "🍚",
+    image: randomImage,
   }
 }
 
@@ -49,6 +72,7 @@ function NumberGame() {
 
   const totalQuestions = 10
 
+  // MEMERIKSA JAWABAN
   const handleAnswer = (number: number) => {
     if (feedback) return
 
@@ -71,10 +95,12 @@ function NumberGame() {
     }
   }
 
+  // COBA LAGI
   const tryAgain = () => {
     setFeedback(null)
   }
 
+  // ULANG PERMAINAN
   const restartGame = () => {
     setQuestionNumber(1)
     setScore(0)
@@ -87,7 +113,6 @@ function NumberGame() {
     <div className="min-h-screen bg-amber-50 p-4 md:p-8">
 
       {/* HEADER */}
-
       <div className="max-w-5xl mx-auto text-center">
 
         <h1 className="
@@ -109,7 +134,6 @@ function NumberGame() {
         </p>
 
         {/* INFO */}
-
         <div className="
           flex
           justify-center
@@ -143,11 +167,9 @@ function NumberGame() {
           </div>
 
         </div>
-
       </div>
 
       {/* GAME AREA */}
-
       <div className="
         max-w-5xl
         mx-auto
@@ -167,7 +189,6 @@ function NumberGame() {
         ">
 
           {/* PILIHAN ANGKA */}
-
           <div className="text-center">
 
             <h2 className="
@@ -210,6 +231,7 @@ function NumberGame() {
                     hover:scale-105
                     active:scale-95
                     transition
+                    disabled:opacity-70
                   "
                 >
                   {number}
@@ -218,11 +240,9 @@ function NumberGame() {
               ))}
 
             </div>
-
           </div>
 
-          {/* JUMLAH OBJEK */}
-
+          {/* JUMLAH GAMBAR */}
           <div className="text-center">
 
             <h2 className="
@@ -253,27 +273,28 @@ function NumberGame() {
                 length: question.answer,
               }).map((_, index) => (
 
-                <span
+                <img
                   key={index}
+                  src={question.image}
+                  alt="Gambar untuk dihitung"
                   className="
-                    text-5xl
-                    md:text-6xl
+                    w-16
+                    h-16
+                    md:w-20
+                    md:h-20
+                    object-contain
                     animate-pulse
                   "
-                >
-                  {question.object}
-                </span>
+                />
 
               ))}
 
             </div>
-
           </div>
 
         </div>
 
         {/* PETUNJUK */}
-
         <div className="
           mt-8
           text-center
@@ -292,11 +313,9 @@ function NumberGame() {
           </p>
 
         </div>
-
       </div>
 
       {/* FEEDBACK BENAR */}
-
       {feedback === "correct" && (
 
         <div className="
@@ -359,13 +378,10 @@ function NumberGame() {
             </div>
 
           </div>
-
         </div>
-
       )}
 
       {/* FEEDBACK SALAH */}
-
       {feedback === "wrong" && (
 
         <div className="
@@ -432,13 +448,10 @@ function NumberGame() {
             </button>
 
           </div>
-
         </div>
-
       )}
 
       {/* SELESAI */}
-
       {showFinish && (
 
         <div className="
@@ -513,13 +526,10 @@ function NumberGame() {
             </button>
 
           </div>
-
         </div>
-
       )}
 
       {/* RESET */}
-
       <div className="text-center mt-7">
 
         <button
@@ -545,29 +555,3 @@ function NumberGame() {
 }
 
 export default NumberGame
-
-// function NumberGame() {
-//   return (
-//     <div className="min-h-screen bg-green-100 flex items-center justify-center">
-
-//       <div className="text-center">
-
-//         <div className="text-7xl">
-//           🔢
-//         </div>
-
-//         <h1 className="text-4xl font-bold mt-4">
-//           Mengenal Angka
-//         </h1>
-
-//         <p className="text-xl mt-3">
-//           Game angka akan kita buat di sini.
-//         </p>
-
-//       </div>
-
-//     </div>
-//   )
-// }
-
-// export default NumberGame

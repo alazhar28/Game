@@ -657,7 +657,7 @@ function MatchingGame() {
                           items-center
                           justify-center
                           hover:bg-purple-100
-                          active:bg-blue-100
+                          active:bg-green-100
                           transition
                           touch-none
                         "
