@@ -154,21 +154,21 @@ function VokalGame() {
           {/* INFORMASI */}
           <div className="flex justify-center gap-3 mb-6">
 
-            <div className="bg-white rounded-2xl shadow px-4 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-4 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SOAL</p>
               <p className="text-2xl font-bold text-blue-600">
                 {started && !finished ? questionIndex + 1 : finished ? 15 : 0}/15
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow px-4 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-4 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SKOR</p>
               <p className="text-2xl font-bold text-blue-500">
                 {Math.round(score)}
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow px-4 py-3 text-center flex-1">
+            <div className="bg-white/30 rounded-2xl shadow px-4 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">WAKTU</p>
               <p className="text-2xl font-bold text-orange-500">
                 {formatTime(seconds)}
@@ -179,7 +179,7 @@ function VokalGame() {
 
           {/* HALAMAN MULAI */}
           {!started && !finished && (
-            <div className="bg-white rounded-3xl p-8 text-center shadow-xl mt-8">
+            <div className="bg-white/50 rounded-3xl p-8 text-center shadow-xl mt-8">
 
               <div className="text-8xl mb-5">🔤</div>
 
@@ -204,7 +204,7 @@ function VokalGame() {
           {/* PAPAN PERMAINAN */}
           {started && !finished && question && (
 
-            <div className="bg-white rounded-3xl shadow-xl p-5 md:p-8">
+            <div className="bg-white/30 rounded-3xl shadow-xl p-5 md:p-8">
 
               <h2 className="text-center text-xl md:text-2xl font-bold text-purple-600 mb-6">
                 👀 Perhatikan Gambar dan Lengkapi Hurufnya!

@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom"
+import Footer from "../components/Footer"
 
 function Home() {
   return (
@@ -146,6 +147,14 @@ function Home() {
           </div>
         </div>
       </div>
+
+
+
+       {/* FOOTER */}
+      <Footer />
+
+
+      
     </div>
   )
 }
