@@ -1,3 +1,4 @@
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa"
 
 function Footer() {
   return (
@@ -17,35 +18,34 @@ function Footer() {
         <p className="text-xs md:text-sm text-gray-900">
           Khusus untuk KB-TK Islam Al Azhar 28 Solo Baru
         </p>
+{/* MEDIA SOSIAL */}
+<div className="flex justify-center items-center gap-6 mt-4">
 
-        {/* MEDIA SOSIAL */}
-        <div className="flex justify-center items-center gap-5 mt-4">
+  <a href="#" target="_blank" rel="noreferrer"
+    className="text-pink-600 hover:scale-125 transition duration-300"
+    title="Instagram">
+    <FaInstagram size={25} />
+  </a>
 
-          <a href="#" target="_blank" rel="noreferrer"
-            className="text-pink-600 hover:scale-125 transition text-2xl"
-            title="Instagram">
-            📸
-          </a>
+  <a href="#" target="_blank" rel="noreferrer"
+    className="text-red-600 hover:scale-125 transition duration-300"
+    title="YouTube">
+    <FaYoutube size={25} />
+  </a>
 
-          <a href="#" target="_blank" rel="noreferrer"
-            className="text-red-600 hover:scale-125 transition text-2xl"
-            title="YouTube">
-            ▶️
-          </a>
+  <a href="#" target="_blank" rel="noreferrer"
+    className="text-blue-700 hover:scale-125 transition duration-300"
+    title="Facebook">
+    <FaFacebookF size={25} />
+  </a>
 
-          <a href="#" target="_blank" rel="noreferrer"
-            className="text-blue-700 hover:scale-125 transition text-2xl"
-            title="Facebook">
-            f
-          </a>
+  <a href="#" target="_blank" rel="noreferrer"
+    className="text-green-600 hover:scale-125 transition duration-300"
+    title="WhatsApp">
+    <FaWhatsapp size={25} />
+  </a>
 
-          <a href="#" target="_blank" rel="noreferrer"
-            className="text-green-600 hover:scale-125 transition text-2xl"
-            title="WhatsApp">
-            💬
-          </a>
-
-        </div>
+</div>
 
         <div className="border-t border-gray-200 mt-5 pt-4">
 
