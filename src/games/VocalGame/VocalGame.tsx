@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react"
+import { FaPlayCircle } from "react-icons/fa"
 
 type Question = {
   id: number
@@ -193,9 +194,10 @@ function VokalGame() {
 
               <button
                 onClick={startGame}
-                className="mt-8 w-full max-w-md py-6 px-8 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white text-2xl font-extrabold rounded-full shadow-lg border-4 border-white hover:scale-105 active:scale-95 transition"
+                className="mt-8 mx-auto w-full max-w-xs py-4 px-6 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white text-xl font-extrabold rounded-full shadow-lg border-4 border-white flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition"
               >
-                🚀 MULAI BERMAIN ⭐
+                <FaPlayCircle className="text-4xl" />
+                Mulai
               </button>
 
             </div>
@@ -229,9 +231,9 @@ function VokalGame() {
                     />
 
 
-                    <p className="text-2xl font-extrabold text-blue-100 mt-2">
+                    {/* <p className="text-2xl font-extrabold text-blue-100 mt-2">
                       {question.name}
-                    </p>
+                    </p> */}
 
                   </div>
 
@@ -318,7 +320,7 @@ function VokalGame() {
 
           {/* PROGRESS */}
           {started && (
-            <div className="bg-white rounded-full h-4 overflow-hidden mt-6 shadow">
+            <div className="bg-white/30 rounded-full h-4 overflow-hidden mt-6 shadow">
               <div
                 className="bg-blue-400 h-full transition-all duration-500"
                 style={{
@@ -331,7 +333,7 @@ function VokalGame() {
           {/* HASIL AKHIR */}
           {finished && (
 
-            <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+            <div className="bg-white/30 rounded-3xl shadow-xl p-8 text-center">
 
               <img
                 src="/images/goodjob.png"
@@ -367,9 +369,9 @@ function VokalGame() {
 
               <button
                 onClick={restartGame}
-                className="mt-8 bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-full text-xl font-bold"
+                className="mt-8 bg-blue-500 hover:bg-blue-600 text-white px-30 py-4 rounded-full text-6xl font-bold"
               >
-                🔄 MAIN LAGI
+                <FaPlayCircle />
               </button>
 
             </div>

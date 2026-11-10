@@ -51,7 +51,7 @@ function Home() {
 
             {/* CARI PASANGAN */}
             <Link
-              to="/game/matching"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl
@@ -89,7 +89,7 @@ function Home() {
 
             {/* MENGENAL ANGKA */}
             <Link
-              to="/game/number"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl
@@ -140,7 +140,27 @@ function Home() {
             >
               <div className="text-6xl">🧠</div>
               <h2 className="text-xl font-bold mt-4">
-                Melengkapi Huruf
+                Melengkapi Huruf Vokal
+              </h2>
+            </Link>
+
+            
+            {/* WRITING LATTER */}
+            <Link
+              to="/game/writing"
+              className="
+                bg-white/90
+                rounded-3xl
+                p-6
+                shadow-lg
+                text-center
+                hover:scale-105
+                transition
+              "
+            >
+              <div className="text-6xl">🧠</div>
+              <h2 className="text-xl font-bold mt-4">
+                Melengkapi Huruf Abjad
               </h2>
             </Link>
 

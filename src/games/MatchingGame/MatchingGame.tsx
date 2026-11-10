@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react"
-import { FaCheckCircle, FaStar} from "react-icons/fa"
+import { FaCheckCircle, FaFrown, FaGrinStars, FaLaughBeam, FaMeh, FaSadTear, FaSmile, FaTimesCircle} from "react-icons/fa"
 
 type Shape =
   | "triangle"
@@ -819,8 +819,44 @@ function MatchingGame() {
         </div>
       </div>
 
-      {/* MODAL FEEDBACK */}
+  
+  {/* MODAL FEEDBACK */}
 {feedback && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-hidden">
+
+    {feedback === "benar" ? (
+      <>
+        {/* EMOTICON SENANG BERTABURAN */}
+        <FaSmile className="absolute top-[12%] left-[15%] text-6xl text-yellow-400 animate-bounce" />
+        <FaLaughBeam className="absolute top-[20%] right-[15%] text-7xl text-yellow-400 animate-bounce" />
+        <FaGrinStars className="absolute bottom-[18%] left-[12%] text-7xl text-yellow-400 animate-bounce" />
+        <FaSmile className="absolute bottom-[15%] right-[15%] text-6xl text-yellow-400 animate-bounce" />
+        <FaLaughBeam className="absolute top-[45%] left-[5%] text-5xl text-yellow-400 animate-bounce" />
+        <FaGrinStars className="absolute top-[45%] right-[5%] text-5xl text-yellow-400 animate-bounce" />
+
+        {/* CHECKLIST BIRU */}
+        <FaCheckCircle className="text-[400px] text-blue-800 drop-shadow-2xl animate-bounce" />
+      </>
+    ) : (
+      <>
+        {/* EMOTICON SEDIH BERTABURAN */}
+        <FaSadTear className="absolute top-[12%] left-[15%] text-7xl text-red-400 animate-bounce" />
+        <FaFrown className="absolute top-[20%] right-[15%] text-6xl text-red-400 animate-bounce" />
+        <FaMeh className="absolute bottom-[18%] left-[12%] text-7xl text-red-400 animate-bounce" />
+        <FaSadTear className="absolute bottom-[15%] right-[15%] text-6xl text-red-400 animate-bounce" />
+        <FaFrown className="absolute top-[45%] left-[5%] text-5xl text-red-400 animate-bounce" />
+        <FaMeh className="absolute top-[45%] right-[5%] text-5xl text-red-400 animate-bounce" />
+
+        {/* X MERAH */}
+        <FaTimesCircle className="text-[400px] text-red-600 drop-shadow-2xl animate-bounce" />
+      </>
+    )}
+
+  </div>
+)}
+
+
+{/* {feedback && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
     <div
       className={`w-full max-w-sm rounded-3xl border-4 p-8 text-center shadow-2xl ${
@@ -837,6 +873,7 @@ function MatchingGame() {
               </div>
             </div>
             
+            
             <h2 className="mt-3 text-3xl font-bold text-blue-700">
               Hebat!
               </h2>
@@ -850,7 +887,7 @@ function MatchingGame() {
                   
                 <>
           <div className="w-full flex flex-col text-8xl text-red-700 items-center justify-center text-center">
-              <FaCheckCircle />
+              <FaTimesCircle />
               </div>
           <h2 className="mt-3 text-3xl font-bold text-red-700">
             Belum Tepat!
@@ -861,7 +898,8 @@ function MatchingGame() {
       )}
     </div>
   </div>
-)}
+)} */}
+
     </div>
   )
 }
