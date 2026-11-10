@@ -1,5 +1,6 @@
 
 import { useEffect, useRef, useState } from "react"
+import { FaCheckCircle, FaStar, FaTimesCircle } from "react-icons/fa"
 
 type Shape =
   | "triangle"
@@ -830,16 +831,27 @@ function MatchingGame() {
     >
       {feedback === "benar" ? (
         <>
-          <div className="text-8xl">✓</div>
-          <h2 className="mt-3 text-3xl font-bold text-blue-700">
-            Hebat!
-          </h2>
-          <div className="mt-3 text-4xl">⭐⭐⭐⭐⭐</div>
-          
-        </>
-      ) : (
-        <>
-          <div className="text-8xl font-bold text-red-500">✕</div>
+          <div className="text-8xl text-blue-600 flex">
+            <div className="w-full flex flex-col items-center justify-center text-center">
+              <FaCheckCircle />
+              </div>
+            </div>
+            
+            <h2 className="mt-3 text-3xl font-bold text-blue-700">
+              Hebat!
+              </h2>
+              
+              <div className="mt-3 flex justify-center gap-2 text-yellow-400 text-4xl">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <FaStar key={star} />
+                  ))}
+                  </div></>
+                  ) : (
+                  
+                <>
+          <div className="w-full flex flex-col text-8xl text-red-700 items-center justify-center text-center">
+              <FaCheckCircle />
+              </div>
           <h2 className="mt-3 text-3xl font-bold text-red-700">
             Belum Tepat!
           </h2>

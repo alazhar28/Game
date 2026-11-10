@@ -18,6 +18,8 @@ function Footer() {
         <p className="text-xs md:text-sm text-gray-900">
           Khusus untuk KB-TK Islam Al Azhar 28 Solo Baru
         </p>
+
+        
 {/* MEDIA SOSIAL */}
 <div className="flex justify-center items-center gap-6 mt-4">
 
