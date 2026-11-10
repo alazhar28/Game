@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react"
-import { FaCheckCircle, FaStar, FaTimesCircle } from "react-icons/fa"
+import { FaCheckCircle, FaStar} from "react-icons/fa"
 
 type Shape =
   | "triangle"
