@@ -215,7 +215,7 @@ function VokalGame() {
                 {/* GAMBAR KIRI */}
                 <div className="flex flex-col items-center">
 
-                  <div className="w-full max-w-sm aspect-square bg-blue-50 border-4 border-blue-300 rounded-3xl p-4 flex flex-col items-center justify-center">
+                  <div className="w-full max-w-sm aspect-square bg-blue-50 border-4 border-blue-300 rounded-3xl p-4 flex flex-col items-center justify-center transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
 
                     <img
                       key={question.id}
