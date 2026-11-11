@@ -14,6 +14,7 @@ type GameQuestion = {
   hiddenIndices: number[]
 }
 
+// NAMA 
 const questions: Question[] = [
   { id: 1, name: "Roda", image: "/images/geometri/roda.png" },
   { id: 2, name: "Sapi", image: "/images/geometri/sapi.png" },
