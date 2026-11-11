@@ -236,11 +236,11 @@ export default function AnimalGroupingGame() {
                     onDragOver={handleDragOver}
                     onDrop={handleDrop}
                     className={`relative group overflow-hidden rounded-3xl shadow-xl h-[450px] min-h-[450px] ${selectedCategory === "darat"
-                    ? "bg-green-100"
-                    : selectedCategory === "air"
-                    ? "bg-blue-100"
-                    : "bg-yellow-100"
-                    }`}
+                ? "bg-green-100"
+                : selectedCategory === "air"
+                ? "bg-blue-100"
+                : "bg-yellow-100"
+                }`}
                     >
 
                   {/* GAMBAR LATAR */}
