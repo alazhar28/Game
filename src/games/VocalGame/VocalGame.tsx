@@ -56,8 +56,6 @@ function VokalGame() {
   // NAMA PEMAIN
   const [playerName, setPlayerName] = useState("")
 
-  const navigate = useNavigate()
-
   const question = shuffledQuestions[questionIndex]
 
   // TIMER
