@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from "react"
 import { FaPlayCircle } from "react-icons/fa"
+import { IoArrowBackCircle } from "react-icons/io5"
+import { useNavigate } from "react-router-dom"
+
 
 type Question = {
   id: number
@@ -50,6 +53,7 @@ function VokalGame() {
   const [finished, setFinished] = useState(false)
   const [feedback, setFeedback] = useState("")
   const [answered, setAnswered] = useState(false)
+  const navigate = useNavigate()
 
   const question = shuffledQuestions[questionIndex]
 
@@ -141,6 +145,19 @@ function VokalGame() {
       <div className="fixed inset-0 bg-white/30" />
 
       <div className="relative z-10 min-h-screen p-4 md:p-6">
+
+
+      {/* TOMBOL KEMBALI HOME */}
+          <button
+            onClick={() => navigate("/")}
+            className="fixed top-4 left-4 z-50 flex items-center gap-2 
+            bg-blue-600 text-white px-4 py-3 rounded-full 
+            shadow-lg border-2 border-white 
+            hover:bg-blue-300 hover:scale-105 transition hover:text-blue-600 hover:border-blue-600"
+          >
+            <IoArrowBackCircle className="text-4xl" />
+            <span className="font-bold">Kembali</span>
+          </button>
 
         <div className="max-w-5xl mx-auto">
 

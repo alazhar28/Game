@@ -158,7 +158,7 @@ function Home() {
                 transition
               "
             >
-              <div className="text-6xl">🧠</div>
+              <div className="text-6xl">🔤</div>
               <h2 className="text-xl font-bold mt-4">
                 Melengkapi Huruf Abjad
               </h2>
