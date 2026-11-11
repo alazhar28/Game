@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react"
 import { FaPlayCircle } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
 import { BackHomeButton, StopButton } from "../../components/BackButton"
 
 type Question = {
