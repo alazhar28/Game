@@ -1,6 +1,5 @@
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
 import { BackHomeButton } from "../../components/BackButton"
 
 type Category = "darat" | "air" | "udara"
