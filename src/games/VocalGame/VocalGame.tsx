@@ -164,7 +164,7 @@ function VokalGame() {
 
           {/* JUDUL */}
           <div className="text-center mb-6">
-            <h1 className="text-3xl md:text-5xl font-extrabold text-blue-600">
+            <h1 className="text-3xl md:text-5xl font-judul font-extrabold text-blue-600">
               🔤 Lengkapi Huruf yang Hilang!
             </h1>
           </div>

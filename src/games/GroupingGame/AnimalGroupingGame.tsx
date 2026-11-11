@@ -122,7 +122,7 @@ export default function AnimalGroupingGame() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden font-judul">
 
       {/* BACKGROUND */}
       <div
@@ -146,7 +146,7 @@ export default function AnimalGroupingGame() {
             {!selectedCategory && (
             <div className="text-center">
 
-                <h1 className="text-3xl md:text-5xl font-extrabold text-blue-600 mb-10">
+                <h1 className="text-3xl md:text-5xl font-judul font-extrabold text-blue-600 mb-10">
                 🦖 Dimana ya tinggalnya? 🦕
                 </h1>
 
@@ -200,9 +200,10 @@ export default function AnimalGroupingGame() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* KUMPULAN HEWAN */}
-                <div className="bg-white/30 rounded-3xl shadow-xl p-5 min-h-[450px] h-[450px]">
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 min-h-full content-start">
+                <div className="bg-white/30 rounded-3xl shadow-xl p-5 min-h-[650px] h-auto">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 content-start">
 
+                
                     {animalData
                       .filter((animal) => !placed.includes(animal.id))
                       .map((animal) => (
@@ -269,9 +270,9 @@ export default function AnimalGroupingGame() {
 
                     {placed.length === 0 && (
                       <div className="col-span-3 flex items-center justify-center">
-                        <div className="bg-white/80 rounded-2xl px-6 py-4 text-5xl">
+                        {/* <div className="bg-white/80 rounded-2xl px-6 py-4 text-5xl">
                           👇
-                        </div>
+                        </div> */}
                       </div>
                     )}
 
@@ -283,17 +284,17 @@ export default function AnimalGroupingGame() {
               {/* FEEDBACK */}
               {feedback && (
                 <div className="fixed inset-0 z-40 flex items-center justify-center pointer-events-none">
-                  <div
-                    className={`rounded-3xl px-10 py-8 text-7xl shadow-2xl ${
-                      feedback === "benar"
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-red-100 text-red-500"
-                    }`}
-                  >
-                    {feedback === "benar" ? "✓ ⭐" : "✕ 😢"}
-                  </div>
+                    <img
+                    src={
+                        feedback === "benar"
+                        ? "/images/animal-grouping/bener.png"
+                        : "/images/animal-grouping/salah.png"
+                    }
+                    alt={feedback === "benar" ? "Benar" : "Coba lagi"}
+                    className="w-[500px] h-[500px] md:w-[600px] md:h-[600px] object-contain drop-shadow-2xl animate-bounce"
+                    />
                 </div>
-              )}
+                )}
 
             </div>
           )}

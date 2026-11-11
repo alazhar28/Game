@@ -4,7 +4,7 @@ import Footer from "../components/Footer"
 
 function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative font-judul min-h-screen overflow-hidden">
 
       {/* BACKGROUND GAMBAR BLUR */}
       <div
