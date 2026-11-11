@@ -1,9 +1,7 @@
 
-
 import { useEffect, useRef, useState } from "react"
 import { FaPlayCircle } from "react-icons/fa"
-import { IoArrowBackCircle } from "react-icons/io5"
-import { useNavigate } from "react-router-dom"
+import { BackHomeButton, StopButton } from "../../components/BackButton"
 
 type Question = {
   id: number
@@ -45,18 +43,21 @@ function shuffle<T,>(array: T[]): T[] {
   return result
 }
 
+
 function createRounds(): GameQuestion[] {
-  return shuffle(questions).map((question) => {
+  return shuffle(questions).map((question, index) => {
     const word = question.name.toLowerCase()
 
-    // Pilih 2 posisi huruf yang dikosongkan
-    const hiddenIndices = shuffle(
-      Array.from({ length: word.length }, (_, i) => i)
-    ).slice(0, 2).sort((a, b) => a - b)
+    // Bergantian: dua huruf depan dan dua huruf belakang
+    const hiddenIndices =
+      index % 2 === 0
+        ? [0, 1]
+        : [word.length - 2, word.length - 1]
 
     return { question, hiddenIndices }
   })
 }
+
 
 function WritingLatter() {
   const [rounds, setRounds] = useState<GameQuestion[]>([])
@@ -68,9 +69,12 @@ function WritingLatter() {
   const [finished, setFinished] = useState(false)
   const [feedback, setFeedback] = useState("")
   const [answered, setAnswered] = useState(false)
-  const navigate = useNavigate()
+
+  // NAMA PEMAIN
+  const [playerName, setPlayerName] = useState("")
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const currentRound = rounds[questionIndex]
   const question = currentRound?.question
@@ -87,6 +91,15 @@ function WritingLatter() {
     return () => clearInterval(timer)
   }, [started, finished])
 
+  // BERSIHKAN TIMEOUT
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   // FORMAT WAKTU
   const formatTime = (value: number) => {
     const minutes = Math.floor(value / 60)
@@ -101,6 +114,12 @@ function WritingLatter() {
 
   // MULAI GAME
   const startGame = () => {
+    if (!playerName.trim()) return
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
     setRounds(createRounds())
     setQuestionIndex(0)
     setAnswers([])
@@ -114,7 +133,7 @@ function WritingLatter() {
 
   // MENULIS HURUF
   const handleChange = (index: number, value: string) => {
-    if (answered) return
+    if (answered || !currentRound) return
 
     const letter = value.slice(-1).replace(/[^a-z]/gi, "").toLowerCase()
 
@@ -123,7 +142,7 @@ function WritingLatter() {
 
     setAnswers(updatedAnswers)
 
-    // Pindah otomatis ke kotak kosong berikutnya
+    // PINDAH OTOMATIS KE KOTAK BERIKUTNYA
     if (letter) {
       const nextIndex = currentRound.hiddenIndices.find(
         (hiddenIndex) => hiddenIndex > index
@@ -139,7 +158,6 @@ function WritingLatter() {
   const handleCheck = () => {
     if (answered || !question || !currentRound) return
 
-    // Pastikan semua kotak sudah diisi
     const allFilled = currentRound.hiddenIndices.every(
       (index) => answers[index]?.trim() !== ""
     )
@@ -163,7 +181,7 @@ function WritingLatter() {
       setFeedback("salah")
     }
 
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       if (questionIndex + 1 >= rounds.length) {
         setFinished(true)
       } else {
@@ -173,11 +191,30 @@ function WritingLatter() {
       setAnswers([])
       setFeedback("")
       setAnswered(false)
+      timeoutRef.current = null
     }, 1500)
+  }
+
+  // HANDLE STOP
+  const handleStop = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+
+    setStarted(false)
+    setFinished(true)
+    setFeedback("")
+    setAnswered(false)
   }
 
   // MAIN LAGI
   const restartGame = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+
     setStarted(false)
     setFinished(false)
     setRounds([])
@@ -187,6 +224,9 @@ function WritingLatter() {
     setSeconds(0)
     setFeedback("")
     setAnswered(false)
+
+    // WAJIB ISI NAMA LAGI
+    setPlayerName("")
   }
 
   return (
@@ -204,17 +244,13 @@ function WritingLatter() {
 
       <div className="relative z-10 min-h-screen p-4 md:p-6">
 
-        {/* TOMBOL KEMBALI HOME */}
-                  <button
-                    onClick={() => navigate("/")}
-                    className="fixed top-4 left-4 z-50 flex items-center gap-2 
-                    bg-blue-600 text-white px-4 py-3 rounded-full 
-                    shadow-lg border-2 border-white 
-                    hover:bg-blue-300 hover:scale-105 transition hover:text-blue-600 hover:border-blue-600"
-                  >
-                    <IoArrowBackCircle className="text-4xl" />
-                    <span className="font-bold">Kembali</span>
-                  </button>
+        {/* TOMBOL HOME */}
+        <BackHomeButton />
+
+        {/* TOMBOL STOP */}
+        {started && (
+          <StopButton onStop={handleStop} />
+        )}
 
         <div className="max-w-5xl mx-auto">
 
@@ -225,13 +261,28 @@ function WritingLatter() {
             </h1>
           </div>
 
+          {/* NAMA PEMAIN SAAT BERMAIN */}
+          {started && !finished && (
+            <div className="text-center mb-5">
+              <div className="inline-block bg-blue-100 border-2 border-blue-300 rounded-full px-6 py-3 shadow-md">
+                <p className="text-xl font-extrabold text-blue-600">
+                  🦕 {playerName} 🦖
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* INFORMASI */}
           <div className="flex justify-center gap-3 mb-6">
 
             <div className="bg-white/50 rounded-2xl shadow px-4 py-3 text-center flex-1">
               <p className="text-sm text-gray-500">SOAL</p>
               <p className="text-2xl font-bold text-blue-600">
-                {started && !finished ? questionIndex + 1 : finished ? 15 : 0}/15
+                {started && !finished
+                  ? questionIndex + 1
+                  : finished
+                  ? questionIndex + 1
+                  : 0}/15
               </p>
             </div>
 
@@ -265,9 +316,35 @@ function WritingLatter() {
                 Perhatikan gambar dan tulislah huruf yang hilang!
               </p>
 
+              {/* INPUT NAMA */}
+              <div className="mt-6 max-w-md mx-auto">
+
+                <input
+                  type="text"
+                  value={playerName}
+                  onChange={(e) => setPlayerName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") startGame()
+                  }}
+                  placeholder="Tulis namamu di sini..."
+                  maxLength={30}
+                  className="w-full px-5 py-4 text-xl text-center font-bold
+                  border-4 border-blue-300 rounded-2xl
+                  focus:outline-none focus:border-blue-500
+                  bg-white text-blue-600"
+                />
+
+              </div>
+
               <button
                 onClick={startGame}
-                className="mt-8 mx-auto w-full max-w-xs py-4 px-6 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white text-xl font-extrabold rounded-full shadow-lg border-4 border-white flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition"
+                disabled={!playerName.trim()}
+                className="mt-8 mx-auto w-full max-w-xs py-4 px-6
+                bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600
+                text-white text-xl font-extrabold rounded-full shadow-lg
+                border-4 border-white flex items-center justify-center gap-3
+                hover:scale-105 active:scale-95 transition
+                disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <FaPlayCircle className="text-4xl" />
                 Mulai
@@ -280,30 +357,30 @@ function WritingLatter() {
           {started && !finished && question && currentRound && (
 
             <div className="bg-white/40 rounded-3xl shadow-xl p-5 md:p-8">
-
+{/* 
               <h2 className="text-center text-xl md:text-2xl font-bold text-purple-600 mb-6">
                 👀 Perhatikan Gambar dan Lengkapi Hurufnya!
-              </h2>
+              </h2> */}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
 
                 {/* GAMBAR KIRI */}
                 <div className="flex flex-col items-center">
 
-                 <div className="w-full max-w-sm aspect-square bg-blue-50 border-4 border-blue-300 rounded-3xl p-4 flex items-center justify-center">
+                  <div className="w-full max-w-sm aspect-square bg-blue-50 border-4 border-blue-300 rounded-3xl p-4 flex items-center justify-center">
 
                     <img
-                        key={question.id}
-                        src={question.image}
-                        alt={question.name}
-                        draggable={false}
-                        className="w-full h-4/5 object-contain transition-transform duration-300 hover:scale-110"
-                        onError={(e) => {
+                      key={question.id}
+                      src={question.image}
+                      alt={question.name}
+                      draggable={false}
+                      className="w-full h-4/5 object-contain transition-transform duration-300 hover:scale-110"
+                      onError={(e) => {
                         e.currentTarget.style.display = "none"
-                        }}
+                      }}
                     />
 
-                    </div>
+                  </div>
 
                   <p className="text-gray-500 font-semibold mt-3">
                     🖼️ Apa nama gambar ini?
@@ -427,11 +504,15 @@ function WritingLatter() {
               />
 
               <h2 className="text-4xl font-extrabold text-blue-500 mt-3">
-                LUAR BIASA! 🎉
+                WAAAH, {playerName.toUpperCase()}!
+              </h2>
+
+              <h2 className="text-3xl font-extrabold text-orange-500 mt-2">
+                HEBAT SEKALI! 🎉
               </h2>
 
               <p className="text-lg text-gray-600 mt-3">
-                Kamu berhasil menyelesaikan 15 soal!
+                Terima kasih sudah bermain dan belajar!
               </p>
 
               <div className="grid grid-cols-2 gap-4 mt-7">
@@ -452,12 +533,20 @@ function WritingLatter() {
 
               </div>
 
+              {/* MAIN LAGI */}
               <button
                 onClick={restartGame}
-                className="mt-8 mx-auto bg-blue-500 hover:bg-blue-600 text-white px-12 py-4 rounded-full text-4xl font-bold flex items-center justify-center"
+                className="mt-8 mx-auto bg-blue-500 hover:bg-blue-600
+                text-white px-10 py-4 rounded-full text-4xl
+                font-bold flex items-center justify-center
+                shadow-lg hover:scale-105 transition"
               >
                 <FaPlayCircle />
               </button>
+
+              <p className="text-gray-500 mt-3 font-semibold">
+                Main Lagi
+              </p>
 
             </div>
 
