@@ -245,7 +245,7 @@ function VokalGame() {
                 onClick={startGame}
                 disabled={!playerName.trim()}
                 className="mt-8 mx-auto w-full max-w-xs py-4 px-6
-                from-blue-400 via-blue-500 to-blue-600
+                bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600
                 text-white text-xl font-extrabold rounded-full shadow-lg
                 border-4 border-white flex items-center justify-center gap-3
                 hover:scale-105 active:scale-95 transition
