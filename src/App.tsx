@@ -7,6 +7,7 @@ import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
 import VokalGame from "./games/VocalGame/VocalGame"
 import WaitingPage from "./games/WaitingPage/WaitingPage"
 import WritingLatter from "./games/WritingLetter/WrittingLatter"
+import AnimalGroupingGame from "./games/GroupingGame/AnimalGroupingGame"
 
 function App() {
   return (
@@ -47,6 +48,11 @@ function App() {
         <Route
           path="/game/writing"
           element={<WritingLatter />}
+        />
+
+        <Route
+          path="/game/animal-grouping"
+          element={<AnimalGroupingGame />}
         />
 
       </Routes>

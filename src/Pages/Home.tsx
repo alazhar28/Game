@@ -164,6 +164,27 @@ function Home() {
               </h2>
             </Link>
 
+
+            {/* MENGELOMPOKKAN HEWAN */}
+            <Link
+              to="/game/animal-grouping"
+              className="
+                bg-white/90
+                rounded-3xl
+                p-6
+                shadow-lg
+                text-center
+                hover:scale-105
+                transition
+              "
+            >
+              <div className="text-6xl">🐾</div>
+              <h2 className="text-xl font-bold mt-4">
+                Mengelompokkan Hewan
+              </h2>
+            </Link>
+
+
           </div>
         </div>
                
