@@ -1,6 +1,7 @@
+
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { BackHomeButton } from "../../components/BackButton"
-const [showResult, setShowResult] = useState(false)
 
 type Category = "darat" | "air" | "udara"
 
@@ -92,43 +93,34 @@ export default function AnimalGroupingGame() {
     if (!animal || placed.includes(animalId)) return
 
     if (animal.category === selectedCategory) {
-    const newPlaced = [...placed, animalId]
+      const newPlaced = [...placed, animalId]
 
-    setPlaced(newPlaced)
-    setFeedback("benar")
+      setPlaced(newPlaced)
+      setFeedback("benar")
 
-    if (newPlaced.length === targetAnimals.length) {
-        setTimeout(() => {
+      if (newPlaced.length === targetAnimals.length) {
         setFinished(true)
-
-        setTimeout(() => {
-            setShowResult(true)
-        }, 2500)
-        }, 500)
-    }
+      }
     } else {
-    setFeedback("salah")
+      setFeedback("salah")
     }
 
-setTimeout(() => setFeedback(""), 1200)
     setTimeout(() => setFeedback(""), 1200)
   }
 
- const chooseCategory = (category: Category) => {
-  setSelectedCategory(category)
-  setPlaced([])
-  setFeedback("")
-  setFinished(false)
-  setShowResult(false)
-}
+  const chooseCategory = (category: Category) => {
+    setSelectedCategory(category)
+    setPlaced([])
+    setFeedback("")
+    setFinished(false)
+  }
 
-const backToCategories = () => {
-  setSelectedCategory(null)
-  setPlaced([])
-  setFeedback("")
-  setFinished(false)
-  setShowResult(false)
-}
+  const backToCategories = () => {
+    setSelectedCategory(null)
+    setPlaced([])
+    setFeedback("")
+    setFinished(false)
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -307,66 +299,29 @@ const backToCategories = () => {
             </div>
           )}
 
-          {/* HALAMAN HASIL */}
-{finished && selectedZone && (
-  <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+          {/* HALAMAN SELESAI */}
+          {finished && (
+            <div className="max-w-xl mx-auto bg-white/95 rounded-3xl shadow-xl p-8 text-center mt-12">
 
-    {/* GAMBAR HASIL */}
-    <div className="relative w-full max-w-5xl h-[85vh] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="text-8xl mb-5">🎉</div>
 
-      <img
-        src={imagePath + selectedZone.image}
-        alt={selectedZone.title}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+              <h2 className="text-4xl font-extrabold text-blue-600">
+                Hebat Sekali!
+              </h2>
 
-      {/* HEWAN */}
-      <div className="relative z-10 w-full h-full grid grid-cols-3 gap-4 p-6 content-end justify-items-center">
+              <div className="text-7xl mt-6">
+                ⭐⭐⭐⭐⭐
+              </div>
 
-        {animalData
-          .filter((animal) => placed.includes(animal.id))
-          .map((animal) => (
-            <img
-              key={animal.id}
-              src={imagePath + animal.image}
-              alt={animal.name}
-              className="w-24 h-24 md:w-40 md:h-40 object-contain drop-shadow-2xl animate-bounce"
-            />
-          ))}
-
-      </div>
-
-            {/* UCAPAN BERHASIL */}
-            {showResult && (
-                <div className="absolute inset-0 z-20 bg-black/30 flex flex-col items-center justify-center text-center">
-
-                <div className="text-8xl mb-5">🎉</div>
-
-                <h2 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg">
-                    Hebat Sekali!
-                </h2>
-
-                <p className="text-2xl text-white font-bold mt-3">
-                    Kamu berhasil mengelompokkan hewan!
-                </p>
-
-                <div className="text-6xl mt-6">
-                    ⭐⭐⭐⭐⭐
-                </div>
-
-                <button
-                    onClick={backToCategories}
-                    className="mt-8 bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-2xl shadow-lg"
-                >
-                    🔄 Main Lagi
-                </button>
-
-                </div>
-            )}
+              <button
+                onClick={backToCategories}
+                className="mt-8 bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-2xl shadow-lg"
+              >
+                🔄 Main Lagi
+              </button>
 
             </div>
-        </div>
-        )}
+          )}
 
         </div>
       </div>
