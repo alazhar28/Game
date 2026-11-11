@@ -4,7 +4,6 @@ import { FaPlayCircle } from "react-icons/fa"
 import { IoArrowBackCircle } from "react-icons/io5"
 import { useNavigate } from "react-router-dom"
 
-
 type Question = {
   id: number
   name: string
@@ -53,6 +52,10 @@ function VokalGame() {
   const [finished, setFinished] = useState(false)
   const [feedback, setFeedback] = useState("")
   const [answered, setAnswered] = useState(false)
+
+  // NAMA PEMAIN
+  const [playerName, setPlayerName] = useState("")
+
   const navigate = useNavigate()
 
   const question = shuffledQuestions[questionIndex]
@@ -82,6 +85,8 @@ function VokalGame() {
 
   // MULAI GAME
   const startGame = () => {
+    if (!playerName.trim()) return
+
     setShuffledQuestions(shuffle(questions))
     setQuestionIndex(0)
     setScore(0)
@@ -146,18 +151,18 @@ function VokalGame() {
 
       <div className="relative z-10 min-h-screen p-4 md:p-6">
 
-
-      {/* TOMBOL KEMBALI HOME */}
-          <button
-            onClick={() => navigate("/")}
-            className="fixed top-4 left-4 z-50 flex items-center gap-2 
-            bg-blue-600 text-white px-4 py-3 rounded-full 
-            shadow-lg border-2 border-white 
-            hover:bg-blue-300 hover:scale-105 transition hover:text-blue-600 hover:border-blue-600"
-          >
-            <IoArrowBackCircle className="text-4xl" />
-            <span className="font-bold">Kembali</span>
-          </button>
+        {/* TOMBOL KEMBALI HOME */}
+        <button
+          onClick={() => navigate("/")}
+          className="fixed top-4 left-4 z-50 flex items-center gap-2
+          bg-blue-600 text-white px-4 py-3 rounded-full
+          shadow-lg border-2 border-white
+          hover:bg-blue-300 hover:scale-105 transition
+          hover:text-blue-600 hover:border-blue-600"
+        >
+          <IoArrowBackCircle className="text-4xl" />
+          <span className="font-bold">Kembali</span>
+        </button>
 
         <div className="max-w-5xl mx-auto">
 
@@ -166,8 +171,19 @@ function VokalGame() {
             <h1 className="text-3xl md:text-5xl font-extrabold text-blue-600">
               🔤 Lengkapi Huruf yang Hilang!
             </h1>
-
           </div>
+
+          {/* NAMA PEMAIN SAAT GAME BERLANGSUNG */}
+          {started && !finished && (
+            <div className="text-center mb-5">
+              <div className="inline-block bg-blue-100 border-2 border-blue-300
+              rounded-full px-6 py-3 shadow-md">
+                <p className="text-xl font-extrabold text-blue-600">
+                  🦕 {playerName} 🦖
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* INFORMASI */}
           <div className="flex justify-center gap-3 mb-6">
@@ -205,13 +221,35 @@ function VokalGame() {
                 Siap Bermain?
               </h2>
 
-              <p className="text-gray-500 mt-3 text-lg">
-                Perhatikan gambar dan lengkapi huruf yang hilang!
-              </p>
+            
+              {/* INPUT NAMA */}
+              <div className="mt-6 max-w-md mx-auto">
+
+                <input
+                  type="text"
+                  value={playerName}
+                  onChange={(e) => setPlayerName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") startGame()
+                  }}
+                  placeholder="Tulis namamu di sini..."
+                  className="w-full px-5 py-4 text-xl text-center font-bold
+                  border-4 border-blue-300 rounded-2xl
+                  focus:outline-none focus:border-blue-500
+                  bg-white text-blue-600"
+                />
+
+              </div>
 
               <button
                 onClick={startGame}
-                className="mt-8 mx-auto w-full max-w-xs py-4 px-6 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 text-white text-xl font-extrabold rounded-full shadow-lg border-4 border-white flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition"
+                disabled={!playerName.trim()}
+                className="mt-8 mx-auto w-full max-w-xs py-4 px-6
+                bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600
+                text-white text-xl font-extrabold rounded-full shadow-lg
+                border-4 border-white flex items-center justify-center gap-3
+                hover:scale-105 active:scale-95 transition
+                disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <FaPlayCircle className="text-4xl" />
                 Mulai
@@ -234,7 +272,10 @@ function VokalGame() {
                 {/* GAMBAR KIRI */}
                 <div className="flex flex-col items-center">
 
-                  <div className="w-full max-w-sm aspect-square bg-blue-50 border-4 border-blue-300 rounded-3xl p-4 flex flex-col items-center justify-center transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
+                  <div className="w-full max-w-sm aspect-square bg-blue-50
+                  border-4 border-blue-300 rounded-3xl p-4 flex flex-col
+                  items-center justify-center transition-transform duration-300
+                  hover:scale-105 hover:shadow-xl cursor-pointer">
 
                     <img
                       key={question.id}
@@ -247,11 +288,6 @@ function VokalGame() {
                       }}
                     />
 
-
-                    {/* <p className="text-2xl font-extrabold text-blue-100 mt-2">
-                      {question.name}
-                    </p> */}
-
                   </div>
 
                   <p className="text-gray-500 font-semibold mt-3">
@@ -263,7 +299,8 @@ function VokalGame() {
                 {/* HURUF KANAN */}
                 <div className="flex flex-col items-center justify-center">
 
-                  <div className="w-full bg-purple-50 rounded-3xl border-4 border-purple-200 p-5 md:p-8">
+                  <div className="w-full bg-purple-50 rounded-3xl
+                  border-4 border-purple-200 p-5 md:p-8">
 
                     <h3 className="text-center text-xl font-bold text-purple-600 mb-8">
                       ✏️ LENGKAPI HURUF
@@ -275,7 +312,9 @@ function VokalGame() {
 
                         <div
                           key={index}
-                          className="w-14 h-16 md:w-16 md:h-20 bg-white border-b-4 border-blue-400 rounded-xl flex items-center justify-center"
+                          className="w-14 h-16 md:w-16 md:h-20 bg-white
+                          border-b-4 border-blue-400 rounded-xl flex
+                          items-center justify-center"
                         >
                           <span className="text-3xl md:text-4xl font-extrabold text-blue-600">
                             {letter}
@@ -285,13 +324,17 @@ function VokalGame() {
                       ))}
 
                       {/* KOTAK HURUF KOSONG */}
-                      <div className={`w-14 h-16 md:w-16 md:h-20 rounded-xl border-4 border-dashed flex items-center justify-center transition ${
-                        feedback === "benar"
-                          ? "bg-blue-100 border-blue-500"
-                          : feedback === "salah"
-                          ? "bg-red-100 border-red-500"
-                          : "bg-yellow-100 border-yellow-400"
-                      }`}>
+                      <div
+                        className={`w-14 h-16 md:w-16 md:h-20 rounded-xl
+                        border-4 border-dashed flex items-center justify-center
+                        transition ${
+                          feedback === "benar"
+                            ? "bg-blue-100 border-blue-500"
+                            : feedback === "salah"
+                            ? "bg-red-100 border-red-500"
+                            : "bg-yellow-100 border-yellow-400"
+                        }`}
+                      >
 
                         <span className="text-4xl font-extrabold text-purple-600">
                           {feedback === "benar"
@@ -316,7 +359,11 @@ function VokalGame() {
                           key={vowel}
                           disabled={answered}
                           onClick={() => handleAnswer(vowel)}
-                          className="aspect-square bg-white border-4 border-yellow-300 rounded-2xl text-3xl md:text-4xl font-extrabold text-orange-500 shadow-md hover:bg-yellow-100 hover:scale-110 active:scale-95 disabled:opacity-60 transition"
+                          className="aspect-square bg-white border-4
+                          border-yellow-300 rounded-2xl text-3xl md:text-4xl
+                          font-extrabold text-orange-500 shadow-md
+                          hover:bg-yellow-100 hover:scale-110 active:scale-95
+                          disabled:opacity-60 transition"
                         >
                           {vowel}
                         </button>
@@ -350,7 +397,7 @@ function VokalGame() {
           {/* HASIL AKHIR */}
           {finished && (
 
-            <div className="bg-white/30 rounded-3xl shadow-xl p-8 text-center">
+            <div className="bg-white/50 rounded-3xl shadow-xl p-8 text-center">
 
               <img
                 src="/images/goodjob.png"
@@ -359,13 +406,18 @@ function VokalGame() {
               />
 
               <h2 className="text-4xl font-extrabold text-blue-500 mt-3">
-                LUAR BIASA! 🎉
+                WAAAH, {playerName.toUpperCase()}!
+              </h2>
+
+              <h2 className="text-3xl font-extrabold text-orange-500 mt-2">
+                HEBAT SEKALI! 🎉
               </h2>
 
               <p className="text-lg text-gray-600 mt-3">
                 Kamu berhasil menyelesaikan 15 soal!
               </p>
 
+              {/* SKOR DAN WAKTU */}
               <div className="grid grid-cols-2 gap-4 mt-7">
 
                 <div className="bg-yellow-50 p-5 rounded-2xl">
@@ -384,12 +436,19 @@ function VokalGame() {
 
               </div>
 
+              {/* MAIN LAGI */}
               <button
                 onClick={restartGame}
-                className="mt-8 bg-blue-500 hover:bg-blue-600 text-white px-30 py-4 rounded-full text-6xl font-bold"
+                className="mt-8 bg-blue-500 hover:bg-blue-600
+                text-white px-10 py-4 rounded-full text-4xl
+                font-bold shadow-lg hover:scale-105 transition"
               >
                 <FaPlayCircle />
               </button>
+
+              <p className="text-gray-500 mt-3 font-semibold">
+                Main Lagi
+              </p>
 
             </div>
 
@@ -407,11 +466,14 @@ function VokalGame() {
 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
 
-          <div className={`w-full max-w-sm rounded-3xl border-4 p-8 text-center shadow-2xl ${
-            feedback === "benar"
-              ? "border-blue-400 bg-blue-100"
-              : "border-red-400 bg-red-100"
-          }`}>
+          <div
+            className={`w-full max-w-sm rounded-3xl border-4 p-8
+            text-center shadow-2xl ${
+              feedback === "benar"
+                ? "border-blue-400 bg-blue-100"
+                : "border-red-400 bg-red-100"
+            }`}
+          >
 
             {feedback === "benar" ? (
               <>
