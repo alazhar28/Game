@@ -470,31 +470,30 @@ function VokalGame() {
                 : "border-red-400 bg-red-100"
             }`}
           >
+            
 
-            {feedback === "benar" ? (
-              <>
-                <div className="text-8xl text-blue-600">✓</div>
+            {/* FEEDBACK */}
+            {feedback && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
 
-                <h2 className="mt-3 text-3xl font-bold text-blue-700">
-                  Hebat!
-                </h2>
+                <img
+                  src={
+                    feedback === "benar"
+                      ? "/images/animal-grouping/bener.png"
+                      : "/images/animal-grouping/salah.png"
+                  }
+                  alt={feedback === "benar" ? "Benar" : "Coba lagi"}
+                  className="
+                    w-[500px] h-[500px]
+                    md:w-[600px] md:h-[600px]
+                    object-contain
+                    drop-shadow-2xl
+                    animate-bounce
+                  "
+                />
 
-                <div className="mt-3 text-4xl">
-                  ⭐⭐⭐⭐⭐
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="text-8xl font-bold text-red-500">✕</div>
-
-                <h2 className="mt-3 text-3xl font-bold text-red-700">
-                  Belum Tepat!
-                </h2>
-
-                <div className="mt-3 text-5xl">😢</div>
-              </>
+              </div>
             )}
-
           </div>
 
         </div>
