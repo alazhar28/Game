@@ -182,12 +182,6 @@ export default function GoatFeedingGame() {
   const [finished, setFinished] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
 
-  // =====================================
-  // NAMA BANGUN DATAR
-  // =====================================
-
-  const targetName =
-    shapes.find((shape) => shape.type === round.target)?.name
 
   // =====================================
   // MULAI SOAL BERIKUTNYA
