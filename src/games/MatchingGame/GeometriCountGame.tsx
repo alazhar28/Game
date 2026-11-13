@@ -519,11 +519,11 @@ export default function GoatFeedingGame() {
             <div className="max-w-xl mx-auto bg-white/95 rounded-3xl shadow-xl p-8 text-center mt-12">
 
   {/* GAMBAR BERHASIL */}
-  <div className="flex justify-center mb-5">
+  <div className="flex justify-center mb-2">
     <img
-      src="/images/benar2.png"
+      src="/images/geometri/benar3.png"
       alt="Jawaban Benar"
-      className="w-64 h-auto object-contain"
+      className="w-100 h-auto object-contain"
     />
   </div>
 
@@ -531,19 +531,11 @@ export default function GoatFeedingGame() {
     Hebat Sekali!
   </h2>
 
-  <div className="text-7xl mt-6">
-    ⭐⭐⭐⭐⭐
-  </div>
-
   <p className="text-xl font-bold text-orange-500 mt-5">
     Kambing sudah kenyang!
   </p>
 
-  <p className="text-xl font-bold text-green-600 mt-2">
-    Kamu berhasil menyelesaikan 10 soal!
-  </p>
-
-  <div className="bg-yellow-50 rounded-2xl p-5 mt-6">
+  <div className="bg-yellow-50 rounded-2xl p-5 mt-4">
     <p className="text-gray-500 font-bold">
       SKOR AKHIR
     </p>
