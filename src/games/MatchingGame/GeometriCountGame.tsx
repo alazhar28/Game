@@ -184,7 +184,7 @@ export default function GoatFeedingGame() {
 
 
   // =====================================
-  // MULAI SOAL BERIKUTNYA
+  // MULAI SOAL BERIKUTNYA Ok
   // =====================================
 
   const nextQuestion = () => {
