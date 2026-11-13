@@ -479,8 +479,8 @@ function VokalGame() {
                 <img
                   src={
                     feedback === "benar"
-                      ? "/images/animal-grouping/bener.png"
-                      : "/images/animal-grouping/salah.png"
+                      ? "/images/geometri/benar1.png"
+                      : "/images/geometri/salah1.png"
                   }
                   alt={feedback === "benar" ? "Benar" : "Coba lagi"}
                   className="

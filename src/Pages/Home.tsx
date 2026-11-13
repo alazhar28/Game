@@ -51,7 +51,7 @@ function Home() {
 
             {/* CARI PASANGAN */}
             <Link
-              to="/game/waiting"
+              to="/game/geometri"
               className="
                 bg-white/90
                 rounded-3xl
@@ -70,7 +70,7 @@ function Home() {
 
             {/* MEWARNAI */}
             <Link
-              to="/game/waiting"
+              to="/game/matching"
               className="
                 bg-white/90
                 rounded-3xl
@@ -89,7 +89,7 @@ function Home() {
 
             {/* MENGENAL ANGKA */}
             <Link
-              to="/game/waiting"
+              to="/game/matching"
               className="
                 bg-white/90
                 rounded-3xl

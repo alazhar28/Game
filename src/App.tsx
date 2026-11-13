@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./Pages/Home"
-
 import NumberGame from "./games/NumberGame/NumberGame"
-import MatchingGame from "./games/MatchingGame/MatchingGame"
 import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
 import VokalGame from "./games/VocalGame/VocalGame"
 import WaitingPage from "./games/WaitingPage/WaitingPage"
 import WritingLatter from "./games/WritingLetter/WrittingLatter"
 import AnimalGroupingGame from "./games/GroupingGame/AnimalGroupingGame"
+import GoatFeedingGame from "./games/MatchingGame/GeometriCountGame"
 
 function App() {
   return (
@@ -20,8 +19,8 @@ function App() {
         />
 
         <Route
-          path="/game/matching"
-          element={<MatchingGame />}
+          path="/game/geometri"
+          element={<GoatFeedingGame />}
         />
 
         <Route
