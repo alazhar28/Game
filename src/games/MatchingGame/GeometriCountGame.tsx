@@ -21,11 +21,41 @@ type Round = {
   items: ShapeItem[]
 }
 
+type GoatOption = {
+  id: number
+  image: string
+  name: string
+}
+
 const TOTAL_QUESTIONS = 10
+
+// =====================================
+// PILIHAN GAMBAR HEWAN
+// =====================================
 
 const imagePath = "/images/animal-grouping/"
 
-const goatImage = imagePath + "kambing-a.png"
+const goatOptions: GoatOption[] = [
+  {
+    id: 1,
+    image: imagePath + "kambing-a.png",
+    name: "Kambing 1",
+  },
+  {
+    id: 2,
+    image: imagePath + "kambing-b.png",
+    name: "Kambing 2",
+  },
+  {
+    id: 3,
+    image: imagePath + "kambing-c.png",
+    name: "Kambing 3",
+  },
+]
+
+// =====================================
+// PILIHAN BANGUN DATAR
+// =====================================
 
 const shapes: { type: ShapeType; name: string }[] = [
   { type: "segitiga", name: "Segitiga" },
@@ -35,7 +65,7 @@ const shapes: { type: ShapeType; name: string }[] = [
   { type: "segilima", name: "Segi Lima" },
 ]
 
-// Warna setiap bangun datar diacak
+// WARNA ACAK
 const colors = [
   "#FF6969",
   "#45B8E8",
@@ -169,6 +199,12 @@ function ShapeDrawing({
 export default function GoatFeedingGame() {
   const [round, setRound] = useState<Round>(() => createRound())
 
+  const [selectedGoat, setSelectedGoat] = useState<GoatOption>(
+    goatOptions[0]
+  )
+
+  const [gameStarted, setGameStarted] = useState(false)
+
   const [questionNumber, setQuestionNumber] = useState(0)
   const [score, setScore] = useState(0)
 
@@ -182,9 +218,8 @@ export default function GoatFeedingGame() {
   const [finished, setFinished] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
 
-
   // =====================================
-  // MULAI SOAL BERIKUTNYA Ok
+  // MULAI SOAL BERIKUTNYA
   // =====================================
 
   const nextQuestion = () => {
@@ -206,6 +241,28 @@ export default function GoatFeedingGame() {
   }
 
   // =====================================
+  // MULAI GAME
+  // =====================================
+
+  const startGame = () => {
+    const newRound = createRound()
+
+    setRound(newRound)
+    setAvailableItems(newRound.items)
+
+    setQuestionNumber(0)
+    setScore(0)
+    setFedCount(0)
+
+    setDraggingItem(null)
+    setFeedback("")
+    setFinished(false)
+    setIsProcessing(false)
+
+    setGameStarted(true)
+  }
+
+  // =====================================
   // DRAG MULAI
   // =====================================
 
@@ -215,7 +272,7 @@ export default function GoatFeedingGame() {
   }
 
   // =====================================
-  // DROP KE KAMBING
+  // DROP KE HEWAN
   // =====================================
 
   const handleDrop = () => {
@@ -263,18 +320,10 @@ export default function GoatFeedingGame() {
   // =====================================
 
   const restartGame = () => {
-    const newRound = createRound()
-
-    setRound(newRound)
-    setAvailableItems(newRound.items)
-
-    setQuestionNumber(0)
-    setScore(0)
-    setFedCount(0)
-
-    setDraggingItem(null)
-    setFeedback("")
+    setGameStarted(false)
     setFinished(false)
+    setFeedback("")
+    setDraggingItem(null)
     setIsProcessing(false)
   }
 
@@ -294,14 +343,84 @@ export default function GoatFeedingGame() {
       <div className="relative z-10 min-h-screen p-4 md:p-6">
 
         <BackHomeButton />
-        
+
         <div className="max-w-7xl mx-auto pt-0">
+
+          {/* ================================= */}
+          {/* HALAMAN PILIH HEWAN */}
+          {/* ================================= */}
+
+          {!gameStarted && !finished && (
+            <div className="max-w-5xl mx-auto text-center pt-8">
+
+              <h1 className="inline-block bg-white/30 rounded-full px-8 py-4 text-3xl md:text-5xl font-extrabold text-blue-600 shadow-xl">
+                🐐 PILIH KAMBINGMU!
+              </h1>
+
+              <p className="text-xl md:text-2xl font-bold text-purple-700 mt-5 mb-8">
+                Kambing mana yang ingin kamu beri makan?
+              </p>
+
+              {/* PILIHAN KAMBING */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+                {goatOptions.map((goat) => (
+
+                  <button
+                    key={goat.id}
+                    onClick={() => setSelectedGoat(goat)}
+                    className={`relative bg-white/30 rounded-3xl p-5 shadow-xl border-4 transition hover:scale-105 ${
+                      selectedGoat.id === goat.id
+                        ? "border-blue-700 bg-blue-50"
+                        : "border-white hover:border-blue-300"
+                    }`}
+                  >
+
+                    {selectedGoat.id === goat.id && (
+                      <div className="absolute top-3 right-3 bg-blue-500 text-white rounded-full w-9 h-9 flex items-center justify-center text-xl font-bold shadow">
+                        ✓
+                      </div>
+                    )}
+
+                    <img
+                      src={goat.image}
+                      alt={goat.name}
+                      draggable={false}
+                      className="w-full h-56 object-contain"
+                    />
+
+                    <p className="text-xl font-extrabold text-blue-600 mt-3">
+                      {goat.name}
+                    </p>
+
+                    {selectedGoat.id === goat.id && (
+                      <p className="text-orange-600 font-bold mt-2">
+                        Dipilih!
+                      </p>
+                    )}
+
+                  </button>
+
+                ))}
+
+              </div>
+
+              {/* TOMBOL MULAI */}
+              <button
+                onClick={startGame}
+                className="mt-10 bg-blue-500 hover:bg-blue-600 text-white text-2xl font-extrabold px-12 py-5 rounded-3xl shadow-xl transition hover:scale-105"
+              >
+                🎮 MULAI BERMAIN
+              </button>
+
+            </div>
+          )}
 
           {/* ================================= */}
           {/* HALAMAN PERMAINAN */}
           {/* ================================= */}
 
-          {!finished && (
+          {gameStarted && !finished && (
             <div>
 
               {/* JUDUL */}
@@ -310,7 +429,6 @@ export default function GoatFeedingGame() {
                 <h1 className="inline-block bg-white/70 rounded-full px-8 py-3 text-2xl md:text-4xl font-extrabold text-blue-600 shadow-lg">
                   🐐 AYO BERI MAKAN KAMBING!
                 </h1>
-                    
 
               </div>
 
@@ -339,28 +457,24 @@ export default function GoatFeedingGame() {
 
               </div>
 
-
               {/* AREA GAME */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
-                {/* ================================= */}
                 {/* KAMBING KIRI */}
-                {/* ================================= */}
-
                 <div
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
-                  className={`relative bg-green-50/90 border-4 rounded-3xl shadow-xl p-4 md:p-6 transition ${
+                  className={`relative bg-blue-50/90 border-4 rounded-3xl shadow-xl p-4 md:p-6 transition ${
                     draggingItem
-                      ? "border-green-500 bg-green-100 scale-[1.01]"
-                      : "border-green-200"
+                      ? "border-blue-500 bg-blue-100 scale-[1.01]"
+                      : "border-blue-200"
                   }`}
                 >
 
                   <div className="relative w-full max-w-xl mx-auto aspect-[10/8] flex items-center justify-center">
 
                     <img
-                      src={goatImage}
+                      src={selectedGoat.image}
                       alt="Kambing"
                       draggable={false}
                       className="w-full h-full object-contain"
@@ -369,7 +483,7 @@ export default function GoatFeedingGame() {
                     {/* AREA DROP */}
                     {draggingItem && (
                       <div className="absolute inset-0 flex items-end justify-center pb-5 pointer-events-none">
-                        <div className="bg-green-500/90 text-white font-extrabold text-xl md:text-2xl rounded-2xl px-6 py-3 shadow-lg animate-bounce">
+                        <div className="bg-blue-500/90 text-white font-extrabold text-xl md:text-2xl rounded-2xl px-6 py-3 shadow-lg animate-bounce">
                           👇 LETAKKAN DI SINI
                         </div>
                       </div>
@@ -417,36 +531,32 @@ export default function GoatFeedingGame() {
 
                 </div>
 
-                {/* ================================= */}
-                {/* PILIHAN BANGUN DATAR KANAN */}
-                {/* ================================= */}
-
+                {/* PILIHAN BANGUN DATAR */}
                 <div className="bg-purple-50/95 border-4 border-purple-200 rounded-3xl shadow-xl p-4 md:p-6">
 
-                <div className="text-center">
+                  <div className="text-center">
 
                     <p className="text-lg md:text-2xl font-bold text-yellow-800">
-                        🥬 Beri makan kambing 🐐
+                      🥬 Beri makan kambing 🐐
                     </p>
 
                     <div className="flex items-center justify-center gap-2 mt-2 mb-4">
 
-                        {/* ANGKA */}
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-orange-600">
+                      <h2 className="text-3xl md:text-4xl font-extrabold text-orange-600">
                         {round.answer}
-                        </h2>
+                      </h2>
 
-                        {/* GAMBAR BANGUN DATAR */}
-                        <div className="w-8 h-8 md:w-10 md:h-10 ">
+                      <div className="w-8 h-8 md:w-10 md:h-10">
                         <ShapeDrawing
-                            type={round.target}
-                            color="#45B8E8"
+                          type={round.target}
+                          color="#45B8E8"
                         />
-                        </div>
+                      </div>
 
                     </div>
 
-                    </div>
+                  </div>
+
                   {/* DAFTAR BANGUN DATAR */}
                   <div className="bg-white/80 rounded-2xl p-3 min-h-[350px] max-h-[500px] overflow-y-auto">
 
@@ -498,7 +608,7 @@ export default function GoatFeedingGame() {
                 <div
                   className="bg-green-400 h-full transition-all duration-500"
                   style={{
-                    width: `${(questionNumber / TOTAL_QUESTIONS) * 100}%`,
+                    width: `${((questionNumber + (fedCount === round.answer ? 1 : 0)) / TOTAL_QUESTIONS) * 100}%`,
                   }}
                 />
               </div>
@@ -518,41 +628,40 @@ export default function GoatFeedingGame() {
 
             <div className="max-w-xl mx-auto bg-white/95 rounded-3xl shadow-xl p-8 text-center mt-12">
 
-  {/* GAMBAR BERHASIL */}
-  <div className="flex justify-center mb-2">
-    <img
-      src="/images/geometri/benar3.png"
-      alt="Jawaban Benar"
-      className="w-100 h-auto object-contain"
-    />
-  </div>
+              <div className="flex justify-center mb-2">
+                <img
+                  src="/images/geometri/benar3.png"
+                  alt="Jawaban Benar"
+                  className="w-64 h-auto object-contain"
+                />
+              </div>
 
-  <h2 className="text-4xl font-extrabold text-blue-600">
-    Hebat Sekali!
-  </h2>
+              <h2 className="text-4xl font-extrabold text-blue-600">
+                Hebat Sekali!
+              </h2>
 
-  <p className="text-xl font-bold text-orange-500 mt-5">
-    Kambing sudah kenyang!
-  </p>
+              <p className="text-xl font-bold text-orange-500 mt-5">
+                Kambing sudah kenyang!
+              </p>
 
-  <div className="bg-yellow-50 rounded-2xl p-5 mt-4">
-    <p className="text-gray-500 font-bold">
-      SKOR AKHIR
-    </p>
+              <div className="bg-yellow-50 rounded-2xl p-5 mt-4">
+                <p className="text-gray-500 font-bold">
+                  SKOR AKHIR
+                </p>
 
-    <p className="text-5xl font-extrabold text-orange-500 mt-2">
-      {score}
-    </p>
-  </div>
+                <p className="text-5xl font-extrabold text-orange-500 mt-2">
+                  {score}
+                </p>
+              </div>
 
-  <button
-    onClick={restartGame}
-    className="mt-8 bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-2xl shadow-lg hover:scale-105 transition"
-  >
-    🔄 Main Lagi
-  </button>
+              <button
+                onClick={restartGame}
+                className="mt-8 bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-2xl shadow-lg hover:scale-105 transition"
+              >
+                🔄 Main Lagi
+              </button>
 
-</div>
+            </div>
 
           )}
 
@@ -563,27 +672,27 @@ export default function GoatFeedingGame() {
       {/* FEEDBACK */}
       {/* ================================= */}
 
-    {feedback && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+      {feedback && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
 
-                <img
-                src={
-                    feedback === "benar"
-                    ? "/images/geometri/benar3.png"
-                    : "/images/geometri/salah2.png"
-                }
-                alt={feedback === "benar" ? "Benar" : "Coba lagi"}
-                className="
-                    w-[500px] h-[500px]
-                    md:w-[600px] md:h-[600px]
-                    object-contain
-                    drop-shadow-2xl
-                    animate-bounce
-                "
-                />
+          <img
+            src={
+              feedback === "benar"
+                ? "/images/geometri/benar3.png"
+                : "/images/geometri/salah2.png"
+            }
+            alt={feedback === "benar" ? "Benar" : "Coba lagi"}
+            className="
+              w-[500px] h-[500px]
+              md:w-[600px] md:h-[600px]
+              object-contain
+              drop-shadow-2xl
+              animate-bounce
+            "
+          />
 
-  </div>
-)}
+        </div>
+      )}
 
     </div>
   )
