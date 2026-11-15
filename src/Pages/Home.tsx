@@ -127,7 +127,7 @@ function Home() {
 
             {/* VOCAL GAME */}
             <Link
-              to="/game/vocal"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl
@@ -147,7 +147,7 @@ function Home() {
             
             {/* WRITING LATTER */}
             <Link
-              to="/game/writing"
+              to="/game/waiting"
               className="
                 bg-white/90
                 rounded-3xl
