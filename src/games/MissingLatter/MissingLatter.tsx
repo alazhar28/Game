@@ -14,6 +14,24 @@ type Question = {
 // CUKUP TAMBAHKAN / GANTI NAMA DAN GAMBAR
 // =====================================
 
+// const questions: Question[] = [
+//   { id: 1, name: "Kucing", image: "/images/geometri/kucing.png" },
+//   { id: 2, name: "Kambing", image: "/images/geometri/kambing.png" },
+//   { id: 3, name: "Sapi", image: "/images/geometri/sapi.png" },
+//   { id: 4, name: "Kuda", image: "/images/geometri/kuda.png" },
+//   { id: 5, name: "Bebek", image: "/images/geometri/bebek.png" },
+//   { id: 6, name: "Ayam", image: "/images/geometri/ayam.png" },
+//   { id: 7, name: "Gajah", image: "/images/geometri/gajah.png" },
+//   { id: 8, name: "Monyet", image: "/images/geometri/monyet.png" },
+//   { id: 9, name: "Kelinci", image: "/images/geometri/kelinci.png" },
+//   { id: 10, name: "Harimau", image: "/images/geometri/harimau.png" },
+//   { id: 11, name: "Singa", image: "/images/geometri/singa.png" },
+//   { id: 12, name: "Jerapah", image: "/images/geometri/jerapah.png" },
+//   { id: 13, name: "Zebra", image: "/images/geometri/zebra.png" },
+//   { id: 14, name: "Panda", image: "/images/geometri/panda.png" },
+//   { id: 15, name: "Domba", image: "/images/geometri/domba.png" },
+// ]
+
 const questions: Question[] = [
   { id: 1, name: "Kambing", image: "/images/geometri/kambing.png" },
   { id: 2, name: "Sapi", image: "/images/geometri/sapi.png" },
@@ -52,13 +70,10 @@ function shuffle<T,>(array: T[]): T[] {
 // =====================================
 
 function createMissingOrder(word: string): number[] {
-  const firstIndex = Math.min(4, word.length - 1)
+  // Hanya satu huruf yang dihilangkan secara acak
+  const randomIndex = Math.floor(Math.random() * word.length)
 
-  return [
-    firstIndex,
-    ...Array.from({ length: word.length }, (_, i) => i)
-      .filter((i) => i !== firstIndex),
-  ]
+  return [randomIndex]
 }
 
 // =====================================
@@ -151,24 +166,25 @@ function MissingLetterGame() {
   // =====================================
 
   const startGame = () => {
-    if (!playerName.trim() || questions.length === 0) return
+  if (!playerName.trim() || questions.length === 0) return
 
-    const newQuestions = shuffle(questions)
+  // Acak semua soal tanpa pengulangan
+  const newQuestions = shuffle([...questions])
 
-    setShuffledQuestions(newQuestions)
-    setQuestionIndex(0)
+  setShuffledQuestions(newQuestions)
+  setQuestionIndex(0)
 
-    setScore(0)
-    setSeconds(0)
+  setScore(0)
+  setSeconds(0)
 
-    setFeedback("")
-    setAnswered(false)
-    setFinished(false)
+  setFeedback("")
+  setAnswered(false)
+  setFinished(false)
 
-    prepareQuestion(newQuestions[0])
+  prepareQuestion(newQuestions[0])
 
-    setStarted(true)
-  }
+  setStarted(true)
+}
 
   // =====================================
   // LANJUT SOAL BERIKUTNYA

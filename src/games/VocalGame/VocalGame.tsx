@@ -13,23 +13,45 @@ type Question = {
 
 const vowels = ["a", "i", "u", "e", "o"]
 
+
+// INI KALAU 2 SUKU KATA LV 1//
+// const questions: Question[] = [
+//   { id: 1, name: "Roda", image: "/images/geometri/roda.png", letters: ["r", "o", "d"], answer: "a" },
+//   { id: 2, name: "Sapi", image: "/images/geometri/sapi.png", letters: ["s", "a", "p"], answer: "i" },
+//   { id: 3, name: "Buku", image: "/images/geometri/buku.png", letters: ["b", "u", "k"], answer: "u" },
+//   { id: 4, name: "Bola", image: "/images/geometri/bola.png", letters: ["b", "o", "l"], answer: "a" },
+//   { id: 5, name: "Meja", image: "/images/geometri/meja.png", letters: ["m", "e", "j"], answer: "a" },
+//   { id: 6, name: "Topi", image: "/images/geometri/topi.png", letters: ["t", "o", "p"], answer: "i" },
+//   { id: 7, name: "Kuda", image: "/images/geometri/kuda.png", letters: ["k", "u", "d"], answer: "a" },
+//   { id: 8, name: "Roti", image: "/images/geometri/roti.png", letters: ["r", "o", "t"], answer: "i" },
+//   { id: 9, name: "Mata", image: "/images/geometri/mata.png", letters: ["m", "a", "t"], answer: "a" },
+//   { id: 10, name: "Susu", image: "/images/geometri/susu.png", letters: ["s", "u", "s"], answer: "u" },
+//   { id: 11, name: "Paku", image: "/images/geometri/paku.png", letters: ["p", "a", "k"], answer: "u" },
+//   { id: 12, name: "Pita", image: "/images/geometri/pita.png", letters: ["p", "i", "t"], answer: "a" },
+//   { id: 13, name: "Nasi", image: "/images/geometri/nasi.png", letters: ["n", "a", "s"], answer: "i" },
+//   { id: 14, name: "Kaca", image: "/images/geometri/kaca.png", letters: ["k", "a", "c"], answer: "a" },
+//   { id: 15, name: "Baju", image: "/images/geometri/baju.png", letters: ["b", "a", "j"], answer: "u" },
+// ]
+
+// INI KALAU ADA HURUF MATINYA LV 2 //
 const questions: Question[] = [
-  { id: 1, name: "Roda", image: "/images/geometri/roda.png", letters: ["r", "o", "d"], answer: "a" },
-  { id: 2, name: "Sapi", image: "/images/geometri/sapi.png", letters: ["s", "a", "p"], answer: "i" },
-  { id: 3, name: "Buku", image: "/images/geometri/buku.png", letters: ["b", "u", "k"], answer: "u" },
-  { id: 4, name: "Bola", image: "/images/geometri/bola.png", letters: ["b", "o", "l"], answer: "a" },
-  { id: 5, name: "Meja", image: "/images/geometri/meja.png", letters: ["m", "e", "j"], answer: "a" },
-  { id: 6, name: "Topi", image: "/images/geometri/topi.png", letters: ["t", "o", "p"], answer: "i" },
-  { id: 7, name: "Kuda", image: "/images/geometri/kuda.png", letters: ["k", "u", "d"], answer: "a" },
-  { id: 8, name: "Roti", image: "/images/geometri/roti.png", letters: ["r", "o", "t"], answer: "i" },
-  { id: 9, name: "Mata", image: "/images/geometri/mata.png", letters: ["m", "a", "t"], answer: "a" },
-  { id: 10, name: "Susu", image: "/images/geometri/susu.png", letters: ["s", "u", "s"], answer: "u" },
-  { id: 11, name: "Paku", image: "/images/geometri/paku.png", letters: ["p", "a", "k"], answer: "u" },
-  { id: 12, name: "Pita", image: "/images/geometri/pita.png", letters: ["p", "i", "t"], answer: "a" },
-  { id: 13, name: "Nasi", image: "/images/geometri/nasi.png", letters: ["n", "a", "s"], answer: "i" },
-  { id: 14, name: "Kaca", image: "/images/geometri/kaca.png", letters: ["k", "a", "c"], answer: "a" },
-  { id: 15, name: "Baju", image: "/images/geometri/baju.png", letters: ["b", "a", "j"], answer: "u" },
+  { id: 1, name: "Sapi", image: "/images/animal-grouping/sapi.png", letters: ["s", "_", "p", "i"], answer: "a" },
+  { id: 2, name: "Kuda", image: "/images/animal-grouping/kuda.png", letters: ["k", "_", "d", "a"], answer: "u" },
+  { id: 3, name: "Ayam", image: "/images/animal-grouping/ayam.png", letters: ["_", "y", "a", "m"], answer: "a" },
+  { id: 4, name: "Bebek", image: "/images/animal-grouping/bebek.png", letters: ["b", "e", "b", "_", "k"], answer: "e" },
+  { id: 5, name: "Gajah", image: "/images/animal-grouping/gajah.png", letters: ["g", "_", "j", "a", "h"], answer: "a" },
+  { id: 6, name: "Kucing", image: "/images/animal-grouping/kucing.png", letters: ["k", "_", "c", "i", "n", "g"], answer: "u" },
+  { id: 7, name: "Singa", image: "/images/animal-grouping/singa.png", letters: ["s", "i", "n", "g", "_"], answer: "a" },
+  { id: 8, name: "Panda", image: "/images/animal-grouping/panda.png", letters: ["p", "_", "n", "d", "a"], answer: "a" },
+  { id: 9, name: "Zebra", image: "/images/animal-grouping/zebra.png", letters: ["z", "_", "b", "r", "a"], answer: "e" },
+  { id: 10, name: "Rusa", image: "/images/animal-grouping/rusa.png", letters: ["r", "_", "s", "a"], answer: "u" },
+  { id: 11, name: "Domba", image: "/images/animal-grouping/domba.png", letters: ["d", "_", "m", "b", "a"], answer: "o" },
+  { id: 12, name: "Badak", image: "/images/animal-grouping/badak.png", letters: ["b", "_", "d", "a", "k"], answer: "a" },
+  { id: 13, name: "Ular", image: "/images/animal-grouping/ular.png", letters: ["_", "l", "a", "r"], answer: "u" },
+  { id: 14, name: "Penyu", image: "/images/animal-grouping/penyu.png", letters: ["p", "_", "n", "y", "u"], answer: "e" },
+  { id: 15, name: "Kelinci", image: "/images/animal-grouping/kelinci.png", letters: ["k", "_", "l", "i", "n", "c", "i"], answer: "e" },
 ]
+
 
 function shuffle<T,>(array: T[]): T[] {
   const result = [...array]
@@ -304,7 +326,7 @@ function VokalGame() {
 
                     <div className="flex justify-center items-center gap-2 md:gap-4">
 
-                      {question.letters.map((letter, index) => (
+                      {/* {question.letters.map((letter, index) => (
 
                         <div
                           key={index}
@@ -317,10 +339,10 @@ function VokalGame() {
                           </span>
                         </div>
 
-                      ))}
+                      ))} */}
 
-                      {/* KOTAK HURUF KOSONG */}
-                      <div
+                      {/* KOTAK HURUF KOSONG LV 1 */}
+                      {/* <div
                         className={`w-14 h-16 md:w-16 md:h-20 rounded-xl
                         border-4 border-dashed flex items-center justify-center
                         transition ${
@@ -338,6 +360,36 @@ function VokalGame() {
                             : "_"}
                         </span>
 
+                      </div> */}
+
+
+                      {/* KOTAK HURUF KOSONG LV 2 */}
+                      <div className="flex justify-center items-center gap-2 md:gap-4">
+                        {question.letters.map((letter, index) => (
+                          <div
+                            key={index}
+                            className={`w-12 h-14 md:w-16 md:h-20 rounded-xl flex
+                            items-center justify-center ${
+                              letter === "_"
+                                ? `border-4 border-dashed ${
+                                    feedback === "benar"
+                                      ? "bg-blue-100 border-blue-500"
+                                      : feedback === "salah"
+                                      ? "bg-red-100 border-red-500"
+                                      : "bg-yellow-100 border-yellow-400"
+                                  }`
+                                : "bg-white border-b-4 border-blue-400"
+                            }`}
+                          >
+                            <span className="text-3xl md:text-4xl font-extrabold text-blue-600">
+                              {letter === "_"
+                                ? feedback === "benar"
+                                  ? question.answer
+                                  : "_"
+                                : letter}
+                            </span>
+                          </div>
+                        ))}
                       </div>
 
                     </div>
@@ -458,21 +510,7 @@ function VokalGame() {
       </div>
 
       {/* MODAL FEEDBACK */}
-      {feedback && (
-
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-
-          <div
-            className={`w-full max-w-sm rounded-3xl border-4 p-8
-            text-center shadow-2xl ${
-              feedback === "benar"
-                ? "border-blue-400 bg-blue-100"
-                : "border-red-400 bg-red-100"
-            }`}
-          >
-            
-
-            {/* FEEDBACK */}
+      {/* FEEDBACK */}
             {feedback && (
               <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
 
@@ -494,11 +532,6 @@ function VokalGame() {
 
               </div>
             )}
-          </div>
-
-        </div>
-
-      )}
 
     </div>
   )

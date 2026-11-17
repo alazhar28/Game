@@ -4,9 +4,9 @@ import NumberGame from "./games/NumberGame/NumberGame"
 import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
 import VokalGame from "./games/VocalGame/VocalGame"
 import WaitingPage from "./games/WaitingPage/WaitingPage"
-import WritingLatter from "./games/WritingLetter/WrittingLatter"
 import AnimalGroupingGame from "./games/GroupingGame/AnimalGroupingGame"
 import GoatFeedingGame from "./games/MatchingGame/GeometriCountGame"
+import WritingLatter from "./games/WritingLetter/WrittingLatter"
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         />
 
         <Route
-          path="/game/writing"
+          path="/game/writting"
           element={<WritingLatter />}
         />
 

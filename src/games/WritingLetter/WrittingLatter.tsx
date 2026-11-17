@@ -14,24 +14,45 @@ type GameQuestion = {
   hiddenIndices: number[]
 }
 
-// NAMA 
+// NAMA LV 1
+// const questions: Question[] = [
+//   { id: 1, name: "Roda", image: "/images/geometri/roda.png" },
+//   { id: 2, name: "Sapi", image: "/images/geometri/sapi.png" },
+//   { id: 3, name: "Buku", image: "/images/geometri/buku.png" },
+//   { id: 4, name: "Bola", image: "/images/geometri/bola.png" },
+//   { id: 5, name: "Meja", image: "/images/geometri/meja.png" },
+//   { id: 6, name: "Topi", image: "/images/geometri/topi.png" },
+//   { id: 7, name: "Kuda", image: "/images/geometri/kuda.png" },
+//   { id: 8, name: "Roti", image: "/images/geometri/roti.png" },
+//   { id: 9, name: "Mata", image: "/images/geometri/mata.png" },
+//   { id: 10, name: "Susu", image: "/images/geometri/susu.png" },
+//   { id: 11, name: "Paku", image: "/images/geometri/paku.png" },
+//   { id: 12, name: "Pita", image: "/images/geometri/pita.png" },
+//   { id: 13, name: "Nasi", image: "/images/geometri/nasi.png" },
+//   { id: 14, name: "Kaca", image: "/images/geometri/kaca.png" },
+//   { id: 15, name: "Baju", image: "/images/geometri/baju.png" },
+// ]
+
+
+// NAMA LV 2
 const questions: Question[] = [
-  { id: 1, name: "Roda", image: "/images/geometri/roda.png" },
-  { id: 2, name: "Sapi", image: "/images/geometri/sapi.png" },
-  { id: 3, name: "Buku", image: "/images/geometri/buku.png" },
-  { id: 4, name: "Bola", image: "/images/geometri/bola.png" },
-  { id: 5, name: "Meja", image: "/images/geometri/meja.png" },
-  { id: 6, name: "Topi", image: "/images/geometri/topi.png" },
-  { id: 7, name: "Kuda", image: "/images/geometri/kuda.png" },
-  { id: 8, name: "Roti", image: "/images/geometri/roti.png" },
-  { id: 9, name: "Mata", image: "/images/geometri/mata.png" },
-  { id: 10, name: "Susu", image: "/images/geometri/susu.png" },
-  { id: 11, name: "Paku", image: "/images/geometri/paku.png" },
-  { id: 12, name: "Pita", image: "/images/geometri/pita.png" },
-  { id: 13, name: "Nasi", image: "/images/geometri/nasi.png" },
-  { id: 14, name: "Kaca", image: "/images/geometri/kaca.png" },
-  { id: 15, name: "Baju", image: "/images/geometri/baju.png" },
+  { id: 1, name: "Sapi", image: "/images/animal-grouping/sapi.png" },
+  { id: 2, name: "Kuda", image: "/images/animal-grouping/kuda.png" },
+  { id: 3, name: "Ayam", image: "/images/animal-grouping/ayam.png" },
+  { id: 4, name: "Bebek", image: "/images/animal-grouping/bebek.png" },
+  { id: 5, name: "Gajah", image: "/images/animal-grouping/gajah.png" },
+  { id: 6, name: "Kucing", image: "/images/animal-grouping/kucing.png" },
+  { id: 7, name: "Singa", image: "/images/animal-grouping/singa.png" },
+  { id: 8, name: "Panda", image: "/images/animal-grouping/panda.png" },
+  { id: 9, name: "Zebra", image: "/images/animal-grouping/zebra.png" },
+  { id: 10, name: "Rusa", image: "/images/animal-grouping/rusa.png" },
+  { id: 11, name: "Domba", image: "/images/animal-grouping/domba.png" },
+  { id: 12, name: "Badak", image: "/images/animal-grouping/badak.png" },
+  { id: 13, name: "Ular", image: "/images/animal-grouping/ular.png" },
+  { id: 14, name: "Penyu", image: "/images/animal-grouping/penyu.png" },
+  { id: 15, name: "Kelinci", image: "/images/animal-grouping/kelinci.png" },
 ]
+
 
 function shuffle<T,>(array: T[]): T[] {
   const result = [...array]
