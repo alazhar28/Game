@@ -10,7 +10,7 @@ function Home() {
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat scale-110 blur-[1px]"
         style={{
-          backgroundImage: "url('/images/background2.png')",
+          backgroundImage: "url('/images/abc1.png')",
         }}
       />
 
@@ -70,6 +70,24 @@ function Home() {
 
             {/* MEWARNAI */}
             <Link
+              to="/game/sapi"
+              className="
+                bg-white/90
+                rounded-3xl
+                p-6
+                shadow-lg
+                text-center
+                hover:scale-105
+                transition
+              "
+            >
+              <div className="text-6xl">🐄</div>
+              <h2 className="text-xl font-bold mt-4">
+                TK A
+              </h2>
+            </Link>
+
+            {/* <Link
               to="/game/waiting"
               className="
                 bg-white/90
@@ -85,7 +103,7 @@ function Home() {
               <h2 className="text-xl font-bold mt-4">
                 Mewarnai
               </h2>
-            </Link>
+            </Link> */}
 
             {/* MENGENAL ANGKA */}
             <Link
