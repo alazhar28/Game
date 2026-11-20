@@ -285,7 +285,7 @@ function WritingLatterCow() {
                 <div className="bg-purple-50 rounded-3xl border-4 border-purple-200 p-5 md:p-8">
 
                   <h3 className="text-center text-4xl font-bold text-purple-600 mb-7">
-                    ✏️ S A P I
+                    ✏️ s a p i
                   </h3>
 
                   {/* INPUT KEYBOARD */}
