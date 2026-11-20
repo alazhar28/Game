@@ -3,10 +3,10 @@ import Home from "./Pages/Home"
 import NumberGame from "./games/NumberGame/NumberGame"
 import NumberMatchingGame from "./games/NumberMatchingGame/NumberMatchingGame"
 import VokalGame from "./games/VocalGame/VocalGame"
-import WaitingPage from "./games/WaitingPage/WaitingPage"
 import AnimalGroupingGame from "./games/GroupingGame/AnimalGroupingGame"
 import WritingLatter from "./games/WritingLetter/WrittingLatter"
 import CowFeedingGame from "./games/MatchingGame/SapiGame"
+import WritingLatterCow from "./games/WritingLetter/WrittingLatterCow"
 
 function App() {
   return (
@@ -24,8 +24,8 @@ function App() {
         />
 
         <Route
-          path="/game/waiting"
-          element={<WaitingPage />}
+          path="/game/tulissapi"
+          element={<WritingLatterCow />}
         />
 
         <Route

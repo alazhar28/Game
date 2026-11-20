@@ -51,7 +51,7 @@ function Home() {
 
             {/* CARI PASANGAN */}
             <Link
-              to="/game/geometri"
+              to="/game/tulissapi"
               className="
                 bg-white/90
                 rounded-3xl
